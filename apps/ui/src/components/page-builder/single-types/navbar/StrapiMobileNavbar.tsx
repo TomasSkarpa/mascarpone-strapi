@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import { AppLocale } from "@/types/general"
 
 import AppLink from "@/components/elementary/AppLink"
 import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
 import StrapiImageWithLink from "@/components/page-builder/components/utilities/StrapiImageWithLink"
+import { getStrapiLinkHref } from "@/components/page-builder/components/utilities/StrapiLink"
 import StrapiSocialIcon from "@/components/page-builder/components/utilities/StrapiSocialIcon"
 
 interface StrapiMobileNavbarProps {
@@ -179,14 +180,15 @@ export function StrapiMobileNavbar({
               {links.length > 0 && (
                 <div>
                   {links.map((link) => {
-                    const isActive = pathname === link.href
+                    const href = getStrapiLinkHref(link) ?? "#"
+                    const isActive = href !== "#" && pathname === href
                     return (
                       <div
-                        key={link.href}
+                        key={link.id ?? href}
                         className="border-b border-gray-100 last:border-b-0"
                       >
-                        <a
-                          href={link.href || "#"}
+                        <AppLink
+                          href={href}
                           onClick={() => setIsOpen(false)}
                           className={`block w-full px-6 py-4 text-left text-base transition-colors duration-200 ${
                             isActive
@@ -195,7 +197,7 @@ export function StrapiMobileNavbar({
                           }`}
                         >
                           {link.label}
-                        </a>
+                        </AppLink>
                       </div>
                     )
                   })}

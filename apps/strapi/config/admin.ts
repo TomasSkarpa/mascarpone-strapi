@@ -9,16 +9,23 @@ export default ({ env }) => {
     clientUrl: env("CLIENT_URL"),
     enabledContentTypeUids: ["api::page.page"],
   }
+  const thirtyDaysSeconds = 30 * 24 * 60 * 60
   return {
     auth: {
       secret: env("ADMIN_JWT_SECRET"),
+      sessions: {
+        maxRefreshTokenLifespan: thirtyDaysSeconds,
+        maxSessionLifespan: thirtyDaysSeconds,
+      },
     },
     apiToken: {
       salt: env("API_TOKEN_SALT"),
     },
     transfer: {
       token: {
-        salt: env("TRANSFER_TOKEN_SALT"),
+        salt:
+          env("TRANSFER_TOKEN_SALT") ||
+          "dev-transfer-salt-set-TRANSFER_TOKEN_SALT-in-production",
       },
     },
     preview: {

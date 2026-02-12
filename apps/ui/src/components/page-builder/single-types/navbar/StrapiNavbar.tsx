@@ -9,6 +9,7 @@ import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
 import { ScrollProgressBar } from "@/components/elementary/ScrollProgressBar"
 import StrapiDesignerTitle from "@/components/page-builder/components/utilities/StrapiDesignerTitle"
 import StrapiImageWithLink from "@/components/page-builder/components/utilities/StrapiImageWithLink"
+import { getStrapiLinkHref } from "@/components/page-builder/components/utilities/StrapiLink"
 import StrapiNavLink from "@/components/page-builder/components/utilities/StrapiNavLink"
 import StrapiSocialIcon from "@/components/page-builder/components/utilities/StrapiSocialIcon"
 
@@ -29,7 +30,9 @@ export function StrapiNavbar({ locale }: { readonly locale: Locale }) {
   }
 
   const links = (navbar.links ?? [])
-    .filter((link) => link.href)
+    .filter(
+      (link) => getStrapiLinkHref(link) && getStrapiLinkHref(link) !== "#"
+    )
     .concat(...hardcodedLinks)
 
   return (
@@ -69,7 +72,10 @@ export function StrapiNavbar({ locale }: { readonly locale: Locale }) {
             {links.length > 0 && (
               <nav className="flex h-7 items-center">
                 {links.map((link) => (
-                  <StrapiNavLink component={link} key={link.href} />
+                  <StrapiNavLink
+                    component={link}
+                    key={link.id ?? getStrapiLinkHref(link)}
+                  />
                 ))}
               </nav>
             )}

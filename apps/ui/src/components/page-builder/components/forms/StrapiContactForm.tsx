@@ -15,14 +15,14 @@ export function StrapiContactForm({
         <div className="flex flex-1">
           <div className="flex max-w-[480px] flex-col gap-8">
             {component.title && (
-              <Heading variant="heading3" tag="h3" className="text-gray-900">
+              <Typography variant="heading3" tag="h3" className="text-gray-900">
                 {component.title}
-              </Heading>
+              </Typography>
             )}
             {component.description && (
-              <Paragraph className="leading-relaxed text-gray-600">
+              <Typography className="leading-relaxed text-gray-600">
                 {component.description}
-              </Paragraph>
+              </Typography>
             )}
           </div>
         </div>

@@ -11,18 +11,34 @@ export interface StrapiLinkProps {
   readonly hideWhenMissing?: boolean
 }
 
-const getStrapiLinkHref = (
+/** Picks fullPath from page relation (flat or REST nested shape). */
+function getPageFullPath(page: unknown): string | undefined {
+  if (!page || typeof page !== "object") return undefined
+  const p = page as Record<string, unknown>
+  if (typeof p.fullPath === "string") return p.fullPath
+  const attrs = p.attributes ?? (p.data as Record<string, unknown>)?.attributes
+  if (attrs && typeof (attrs as Record<string, unknown>).fullPath === "string")
+    return (attrs as Record<string, unknown>).fullPath as string
+  return undefined
+}
+
+/**
+ * Resolves href for a Strapi link component (page → fullPath, external → href).
+ * Falls back to page.fullPath or href when type is missing (API can omit it).
+ */
+export function getStrapiLinkHref(
   component?: Data.Component<"utilities.link"> | null
-) => {
-  // Add more when needed
-  switch (component?.type) {
-    case "external":
-      return component.href
-    case "page":
-      return component.page?.fullPath ?? "#"
-    default:
-      return undefined
-  }
+): string | undefined {
+  if (!component) return undefined
+  const type = component.type
+  const pagePath = getPageFullPath((component as Record<string, unknown>).page)
+  if (type === "external" && component.href) return component.href
+  if (type === "page" && pagePath) return pagePath
+  if (type === "page") return "#"
+  // Resilient fallback when type is missing or unexpected
+  if (pagePath) return pagePath
+  if (component.href) return component.href
+  return undefined
 }
 
 export function StrapiLink({
@@ -45,7 +61,7 @@ export function StrapiLink({
     hasIcons = false,
   } = decorations ?? {}
 
-  const linkHref = getStrapiLinkHref(component)
+  const linkHref = getStrapiLinkHref(component) ?? undefined
 
   if (!linkHref) {
     return children ?? label ?? null

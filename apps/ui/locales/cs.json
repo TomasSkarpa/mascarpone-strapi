@@ -6,6 +6,7 @@
     "metaRobots": "SEO-ROBOTS",
     "keywords": "SEO-KEYWORDS",
     "applicationName": "SEO-APPLICATION-NAME",
+    "siteName": "Název stránky",
     "og": {
       "title": "SEO-OG-TITLE",
       "description": "SEO-OG-DESCRIPTION",

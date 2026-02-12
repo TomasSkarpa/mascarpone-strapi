@@ -1,12 +1,10 @@
 import { Modules } from "@strapi/strapi"
 
 import { animatedLogoRowPopulate } from "./sections/AnimatedLogoRow"
-import { carouselPopulate } from "./sections/Carousel"
 import { contactFormPopulate } from "./sections/ContactForm"
 import { faqPopulate } from "./sections/Faq"
 import { headingWithCtaButtonPopulate } from "./sections/HeadingWithCtaButton"
 import { heroPopulate } from "./sections/Hero"
-import { horizontalImagesPopulate } from "./sections/HorizontalImages"
 import { imageWithCtaButtonPopulate } from "./sections/ImageWithCtaButton"
 import { newsletterFormPopulate } from "./sections/NewsletterForm"
 import { seoPopulate } from "./seo-utilities/Seo"
@@ -62,11 +60,9 @@ const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["fin
     content: {
       on: {
         "sections.image-with-cta-button": imageWithCtaButtonPopulate,
-        "sections.horizontal-images": horizontalImagesPopulate,
         "sections.hero": heroPopulate,
         "sections.heading-with-cta-button": headingWithCtaButtonPopulate,
         "sections.faq": faqPopulate,
-        "sections.carousel": carouselPopulate,
         "sections.animated-logo-row": animatedLogoRowPopulate,
         "forms.newsletter-form": newsletterFormPopulate,
         "forms.contact-form": contactFormPopulate,
@@ -74,45 +70,6 @@ const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["fin
         "utilities.ck-editor-text": true,
         "utilities.tip-tap-rich-text": true,
       },
-      "sections.adaptive-gallery": {
-        populate: {
-          images: {
-            populate: { image: { populate: { media: true } }, link: true },
-          },
-        },
-      },
-      "sections.hero": {
-        populate: {
-          links: true,
-          image: { populate: { media: true } },
-          steps: true,
-        },
-      },
-      "sections.heading-with-cta-button": { populate: { cta: true } },
-      "sections.faq": { populate: { accordions: true } },
-      "sections.animated-logo-row": {
-        populate: { logos: { populate: { media: true } } },
-      },
-      "sections.attachment-download": {
-        populate: { file: true },
-      },
-      "sections.timeline": {
-        populate: { milestones: true },
-      },
-      "sections.project-showcase": {
-        populate: {
-          projects: {
-            populate: {
-              image: true,
-              tags: true,
-              links: true,
-            },
-          },
-        },
-      },
-      "forms.newsletter-form": { populate: { gdpr: true } },
-      "forms.contact-form": { populate: { gdpr: true } },
-      "utilities.ck-editor-content": true,
     },
     seo: seoPopulate,
   }

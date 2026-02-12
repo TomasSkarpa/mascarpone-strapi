@@ -145,7 +145,7 @@ docker compose up -d db
 DATABASE_HOST=db
 
 # run Strapi in docker and connect to same network. In docker-compose.yml there is a "db_network" network already defined, so you don't have to create it. Just reference it in run command
-docker run -it --rm --name starter-strapi -p 1337:1337 --env-file apps/strapi/.env --network=strapi-next-starter_db_network starter-strapi:latest
+docker run -it --rm --name starter-strapi -p 1337:1337 --env-file apps/strapi/.env --network=dev-templates_db_network starter-strapi:latest
 ```
 
 ## ✨ Features

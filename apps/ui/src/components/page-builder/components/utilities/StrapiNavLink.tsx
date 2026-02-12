@@ -1,7 +1,8 @@
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import { cn } from "@/lib/styles"
 import AppLink from "@/components/elementary/AppLink"
+import { getStrapiLinkHref } from "@/components/page-builder/components/utilities/StrapiLink"
 
 interface StrapiNavLinkProps {
   readonly component: Data.Component<"utilities.link">
@@ -9,13 +10,14 @@ interface StrapiNavLinkProps {
 }
 
 export function StrapiNavLink({ component, className }: StrapiNavLinkProps) {
-  if (!component?.href || !component?.label) {
+  const href = getStrapiLinkHref(component)
+  if (!href || href === "#" || !component?.label) {
     return null
   }
 
   return (
     <AppLink
-      href={component.href}
+      href={href}
       variant="ghost"
       className={cn(
         "mx-2 rounded-lg px-3 py-2 text-base font-normal transition-colors duration-200",

@@ -107,7 +107,7 @@ export async function fetchNavbar(locale: Locale) {
     return await PublicStrapiClient.fetchOne("api::navbar.navbar", undefined, {
       locale,
       populate: {
-        links: true,
+        links: { populate: { page: true } },
         logoImage: {},
         socialIcons: true,
         designerTitle: true,
@@ -131,8 +131,10 @@ export async function fetchFooter(locale: Locale) {
     return await PublicStrapiClient.fetchOne("api::footer.footer", undefined, {
       locale,
       populate: {
-        sections: { populate: { links: true } },
-        links: true,
+        sections: {
+          populate: { links: { populate: { page: true } } },
+        },
+        links: { populate: { page: true } },
         socialIcons: true,
         quoteCarousel: { populate: { quotes: true } },
       },
