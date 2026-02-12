@@ -1,4 +1,4 @@
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import { BasicImageProps, StrapiBasicImage } from "./StrapiBasicImage"
 import { StrapiLink, StrapiLinkProps } from "./StrapiLink"

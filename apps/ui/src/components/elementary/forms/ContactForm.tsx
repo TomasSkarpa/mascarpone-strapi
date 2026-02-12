@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { useContactForm } from "@/hooks/useAppForm"
@@ -11,7 +12,6 @@ import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { AppTextArea } from "@/components/forms/AppTextArea"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
 
 export function ContactForm({
   gdpr,
@@ -19,7 +19,6 @@ export function ContactForm({
   gdpr?: { href?: string; label?: string; newTab?: boolean }
 }>) {
   const t = useTranslations("contactForm")
-  const { toast } = useToast()
   const contactFormMutation = useContactForm()
 
   const form = useForm<z.infer<FormSchemaType>>({
@@ -32,10 +31,7 @@ export function ContactForm({
   const onSubmit = (values: z.infer<FormSchemaType>) => {
     contactFormMutation.mutate(values, {
       onSuccess: () => {
-        toast({
-          variant: "default",
-          description: t("success"),
-        })
+        toast.success(t("success"))
         form.reset()
       },
     })
@@ -84,7 +80,7 @@ export function ContactForm({
           <div className="flex flex-col items-start gap-1 text-sm text-gray-600 sm:flex-row sm:items-center">
             <span>{t("gdpr")}</span>
             <AppLink
-              openExternalInNewTab={gdpr.newTab}
+              openInNewTab={gdpr.newTab}
               className="font-medium text-blue-600 underline-offset-2 transition-colors duration-200 hover:text-blue-700 hover:underline"
               href={gdpr?.href}
             >

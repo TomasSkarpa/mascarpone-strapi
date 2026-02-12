@@ -1,4 +1,5 @@
-import { AppLocale } from "@/types/general"
+import { use } from "react"
+import { Locale } from "next-intl"
 
 import { fetchFooter } from "@/lib/strapi-api/content/server"
 import { Container } from "@/components/elementary/Container"
@@ -6,8 +7,8 @@ import StrapiLink from "@/components/page-builder/components/utilities/StrapiLin
 import StrapiQuoteCarousel from "@/components/page-builder/components/utilities/StrapiQuoteCarousel"
 import StrapiSocialIcon from "@/components/page-builder/components/utilities/StrapiSocialIcon"
 
-export async function StrapiFooter({ locale }: { readonly locale: AppLocale }) {
-  const response = await fetchFooter(locale)
+export function StrapiFooter({ locale }: { readonly locale: Locale }) {
+  const response = use(fetchFooter(locale))
   const component = response?.data
 
   if (!component) return null

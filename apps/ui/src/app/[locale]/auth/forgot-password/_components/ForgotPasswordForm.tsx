@@ -3,10 +3,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { useRouter } from "@/lib/navigation"
-import { useUserMutations } from "@/hooks/useUser"
+import { useUserMutations } from "@/hooks/useUserMutations"
 import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button } from "@/components/ui/button"
@@ -18,12 +19,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useToast } from "@/components/ui/use-toast"
 
 export function ForgotPasswordForm() {
   const t = useTranslations("auth.forgotPassword")
   const router = useRouter()
-  const { toast } = useToast()
   const { forgotPasswordMutation } = useUserMutations()
 
   const form = useForm<z.infer<FormSchemaType>>({
@@ -33,17 +32,24 @@ export function ForgotPasswordForm() {
     defaultValues: { email: "" },
   })
 
-  const onSubmit = (data: z.infer<FormSchemaType>) =>
+  const onSubmit = async (data: z.infer<FormSchemaType>) => {
     forgotPasswordMutation.mutate(data, {
       onSuccess: () => {
-        toast({
-          variant: "default",
-          description: t("passwordChangeEmailSent"),
-        })
+        // This flow happens even if the email does not exist in the system
+        toast.success(t("passwordChangeEmailSent"))
         form.reset()
         router.push("/auth/signin")
       },
+      onError: (error) => {
+        // This happens only on unexpected errors (e.g. network issues)
+        const errorMessage = error?.message
+        const displayMessage =
+          errorMessage ?? t("errors.failedToSendPasswordResetEmail")
+
+        toast.error(displayMessage)
+      },
     })
+  }
 
   return (
     <Card className="m-auto w-[400px]">
@@ -60,8 +66,10 @@ export function ForgotPasswordForm() {
         <Button
           type="submit"
           size="lg"
-          variant="default"
+          variant="outline"
           form={forgotPasswordFormName}
+          disabled={forgotPasswordMutation.isPending}
+          className="w-full cursor-pointer"
         >
           {t("submit")}
         </Button>

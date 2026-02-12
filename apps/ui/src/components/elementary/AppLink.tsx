@@ -6,11 +6,13 @@ import { cn } from "@/lib/styles"
 import { buttonVariants } from "@/components/ui/button"
 
 export interface AppLinkProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  extends
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof buttonVariants> {
   readonly href: string
   readonly children?: React.ReactNode
-  readonly openExternalInNewTab?: boolean
+  readonly openInNewTab?: boolean
+  readonly startAdornment?: React.ReactNode
   readonly endAdornment?: React.ReactNode
 }
 
@@ -19,7 +21,8 @@ export const AppLink = ({
   className,
   children,
   endAdornment,
-  openExternalInNewTab = false,
+  startAdornment,
+  openInNewTab = false,
   variant = "link",
   size = "default",
   ...props
@@ -32,15 +35,32 @@ export const AppLink = ({
 
   const formattedHref = formatHref(href)
 
+  const AppLinkInner = (
+    <>
+      {startAdornment && (
+        <span className="relative size-4 transition-transform duration-200 ease-in group-hover:-translate-x-2">
+          {startAdornment}
+        </span>
+      )}
+      {children}
+      {endAdornment && (
+        <span className="relative size-4 transition-transform duration-200 ease-in group-hover:translate-x-2">
+          {endAdornment}
+        </span>
+      )}
+    </>
+  )
+
   if (isAppLink(formattedHref)) {
     return (
-      <Link href={formattedHref} {...props} className={combinedClassName}>
-        {children}
-        {endAdornment && (
-          <span className="transition-transform duration-200 ease-in group-hover:translate-x-2">
-            {endAdornment}
-          </span>
-        )}
+      <Link
+        href={formattedHref}
+        {...props}
+        target={openInNewTab ? "_blank" : ""}
+        rel={openInNewTab ? "noopener" : ""}
+        className={combinedClassName}
+      >
+        {AppLinkInner}
       </Link>
     )
   }
@@ -48,16 +68,11 @@ export const AppLink = ({
   return (
     <a
       href={formattedHref}
-      target={openExternalInNewTab ? "_blank" : ""}
-      rel={openExternalInNewTab ? "noopener noreferrer" : ""}
+      target={openInNewTab ? "_blank" : ""}
+      rel={openInNewTab ? "noopener noreferrer" : ""}
       className={combinedClassName}
     >
-      {children}
-      {endAdornment && (
-        <span className="transition-transform duration-200 ease-in group-hover:translate-x-2">
-          {endAdornment}
-        </span>
-      )}
+      {AppLinkInner}
     </a>
   )
 }

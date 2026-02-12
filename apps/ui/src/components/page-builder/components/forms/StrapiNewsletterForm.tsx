@@ -1,4 +1,4 @@
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
@@ -22,7 +22,7 @@ export function StrapiNewsletterForm({
             <div className="mt-2 flex items-center">
               {component.gdpr?.href && (
                 <AppLink
-                  openExternalInNewTab={Boolean(component.gdpr.newTab)}
+                  openInNewTab={Boolean(component.gdpr.newTab)}
                   className="text-blue-700 underline"
                   href={component.gdpr.href}
                 >

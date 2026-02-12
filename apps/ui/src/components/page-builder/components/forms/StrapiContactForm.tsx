@@ -1,9 +1,8 @@
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 import { ContactForm } from "@/components/elementary/forms/ContactForm"
-import Heading from "@/components/typography/Heading"
-import Paragraph from "@/components/typography/Paragraph"
+import { Typography } from "@/components/typography"
 
 export function StrapiContactForm({
   component,

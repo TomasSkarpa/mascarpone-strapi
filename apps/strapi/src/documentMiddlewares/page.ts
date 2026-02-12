@@ -1,4 +1,15 @@
-import { FindOne } from "../../types"
+import { Modules } from "@strapi/strapi"
+
+import { animatedLogoRowPopulate } from "./sections/AnimatedLogoRow"
+import { carouselPopulate } from "./sections/Carousel"
+import { contactFormPopulate } from "./sections/ContactForm"
+import { faqPopulate } from "./sections/Faq"
+import { headingWithCtaButtonPopulate } from "./sections/HeadingWithCtaButton"
+import { heroPopulate } from "./sections/Hero"
+import { horizontalImagesPopulate } from "./sections/HorizontalImages"
+import { imageWithCtaButtonPopulate } from "./sections/ImageWithCtaButton"
+import { newsletterFormPopulate } from "./sections/NewsletterForm"
+import { seoPopulate } from "./seo-utilities/Seo"
 
 const pageTypes = ["api::page.page"]
 const pageActions = ["findMany"] // We're using findMany to find the pages, but this could be adjusted to findOne per your needs
@@ -46,11 +57,22 @@ export const registerPopulatePageMiddleware = ({ strapi }) => {
   })
 }
 
-const pagePopulateObject: FindOne<"api::page.page">["populate"] = {
-  content: {
-    on: {
-      "sections.image-with-cta-button": {
-        populate: { image: { populate: { media: true } }, link: true },
+const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["findOne"]["populate"] =
+  {
+    content: {
+      on: {
+        "sections.image-with-cta-button": imageWithCtaButtonPopulate,
+        "sections.horizontal-images": horizontalImagesPopulate,
+        "sections.hero": heroPopulate,
+        "sections.heading-with-cta-button": headingWithCtaButtonPopulate,
+        "sections.faq": faqPopulate,
+        "sections.carousel": carouselPopulate,
+        "sections.animated-logo-row": animatedLogoRowPopulate,
+        "forms.newsletter-form": newsletterFormPopulate,
+        "forms.contact-form": contactFormPopulate,
+        "utilities.ck-editor-content": true,
+        "utilities.ck-editor-text": true,
+        "utilities.tip-tap-rich-text": true,
       },
       "sections.adaptive-gallery": {
         populate: {
@@ -93,9 +115,5 @@ const pagePopulateObject: FindOne<"api::page.page">["populate"] = {
       "utilities.ck-editor-content": true,
     },
   },
-  seo: {
-    populate: {
-      metaImage: true,
-    },
-  },
+  seo: seoPopulate,
 }

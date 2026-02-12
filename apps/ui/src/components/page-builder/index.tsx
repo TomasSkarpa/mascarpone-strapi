@@ -1,4 +1,4 @@
-import { UID } from "@repo/strapi"
+import { UID } from "@repo/strapi-types"
 
 import StrapiContactForm from "@/components/page-builder/components/forms/StrapiContactForm"
 import StrapiNewsletterForm from "@/components/page-builder/components/forms/StrapiNewsletterForm"
@@ -13,15 +13,14 @@ import StrapiProjectShowcase from "@/components/page-builder/components/sections
 import StrapiQuoteCarouselSection from "@/components/page-builder/components/sections/StrapiQuoteCarousel"
 import StrapiTimeline from "@/components/page-builder/components/sections/StrapiTimeline"
 import StrapiCkEditorContent from "@/components/page-builder/components/utilities/StrapiCkEditorContent"
+import StrapiTipTapEditorContent from "@/components/page-builder/components/utilities/StrapiTipTapEditorContent"
 
 /**
  * Mapping of Strapi Component UID to React Component
- * TODO: This should map Strapi component uid -> component path to reduce bundle size, however this became an issue with nextjs 15 update
+ * TODO: Improve dynamic/lazy loading of these components to reduce bundle size
  */
-
 export const PageContentComponents: {
-  // [K in UID.Component]?: string // TODO: Next.js 15 has issues with dynamic imports inside pages
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [K in UID.Component]?: React.ComponentType<any>
 } = {
   // elements, seo-utilities, utilities
@@ -29,6 +28,8 @@ export const PageContentComponents: {
   // Add them here if they can be used on Page content level
 
   "utilities.ck-editor-content": StrapiCkEditorContent,
+  "utilities.ck-editor-text": StrapiCkEditorContent,
+  "utilities.tip-tap-rich-text": StrapiTipTapEditorContent,
 
   // Sections
   "sections.animated-logo-row": StrapiAnimatedLogoRow,

@@ -1,4 +1,4 @@
-import type { AppLocale } from "@/types/general"
+import { Locale } from "next-intl"
 
 export interface APIResponseCollectionPagination {
   page: number
@@ -71,10 +71,10 @@ export interface APIResponseWithBreadcrumbs<T> {
 }
 
 export type AppLocalizedParams<T> = T & {
-  // In fetch functions we can pass the AppLocale to get the correct data
-  // AppLocale is meant to be frontend locale, that is mapped to the Strapi locale
+  // In fetch functions we can pass the Locale to get the correct data
+  // Locale is meant to be frontend locale, that is mapped to the Strapi locale
   // before firing the request
-  locale?: AppLocale
+  locale?: Locale
   middlewarePopulate?: string[]
 }
 
@@ -83,11 +83,13 @@ export type BreadCrumb = {
   fullPath: string
 }
 
+export type StrapiLocalization = {
+  id: number
+  documentId: string
+  fullPath: string
+  locale: Locale
+}
+
 export type PageLocalization = {
-  localizations: Array<{
-    id: number
-    documentId: string
-    fullPath: string
-    locale: string
-  }>
+  localizations: StrapiLocalization[]
 } | null

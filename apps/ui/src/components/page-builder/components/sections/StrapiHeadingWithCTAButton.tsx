@@ -1,5 +1,5 @@
 import React from "react"
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"

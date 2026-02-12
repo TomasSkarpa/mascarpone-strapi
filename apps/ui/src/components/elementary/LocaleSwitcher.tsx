@@ -2,16 +2,17 @@
 
 import React, { useTransition } from "react"
 import { useSearchParams } from "next/navigation"
-
-import { AppLocale } from "@/types/general"
+import { Locale } from "next-intl"
 
 import { routing, usePathname, useRouter } from "@/lib/navigation"
+import { UseSearchParamsWrapper } from "@/components/helpers/UseSearchParamsWrapper"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectSeparator,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select"
 
 const localeTranslation = {
@@ -19,7 +20,14 @@ const localeTranslation = {
   en: "English",
 }
 
-const LocaleSwitcher = ({ locale }: { locale: AppLocale }) => {
+const LocaleSwitcher = ({ locale }: { locale: Locale }) => {
+  return (
+    <UseSearchParamsWrapper>
+      <SuspensedLocaleSwitcher locale={locale} />
+    </UseSearchParamsWrapper>
+  )
+}
+const SuspensedLocaleSwitcher = ({ locale }: { locale: Locale }) => {
   // prevent the locale switch from blocking the UI thread
   const [, startTransition] = useTransition()
 
@@ -27,7 +35,7 @@ const LocaleSwitcher = ({ locale }: { locale: AppLocale }) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const handleLocaleChange = (locale: AppLocale) => {
+  const handleLocaleChange = (locale: Locale) => {
     const queryParams = searchParams.toString()
 
     // next-intl router.replace does not persist query params
@@ -45,9 +53,9 @@ const LocaleSwitcher = ({ locale }: { locale: AppLocale }) => {
         className="w-18 cursor-pointer font-bold uppercase"
         aria-label="Select language"
       >
-        {locale}
+        <SelectValue>{locale}</SelectValue>
       </SelectTrigger>
-      <SelectContent className="border-gray-300 bg-white/90 shadow-lg backdrop-blur">
+      <SelectContent className="border-gray-300 bg-white/90 shadow-lg backdrop-blur" position="popper">
         {routing.locales.map((locale, index) => (
           <React.Fragment key={locale}>
             <SelectItem

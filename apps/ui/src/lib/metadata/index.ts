@@ -1,11 +1,13 @@
-import { env } from "@/env.mjs"
 import { mergeWith } from "lodash"
+import { Locale } from "next-intl"
 import { getTranslations } from "next-intl/server"
 
-import type { AppLocale } from "@/types/general"
-import type { UID } from "@repo/strapi"
+import type { SocialMetadata } from "@/types/general"
+import type { UID } from "@repo/strapi-types"
 import type { Metadata } from "next"
 
+import { getEnvVar } from "@/lib/env-vars"
+import { isProduction } from "@/lib/general-helpers"
 import { debugSeoGeneration } from "@/lib/metadata/debug"
 import {
   getDefaultMetadata,
@@ -18,6 +20,12 @@ import {
   generateKeywordsFromPage,
   generateMetaTitle,
 } from "@/lib/metadata/fallbacks"
+import {
+  getMetaAlternates,
+  getMetaRobots,
+  preprocessSocialMetadata,
+  seoMergeCustomizer,
+} from "@/lib/metadata/helpers"
 import { fetchPage, fetchSeo } from "@/lib/strapi-api/content/server"
 
 export async function getMetadataFromStrapi({
@@ -27,23 +35,19 @@ export async function getMetadataFromStrapi({
   uid = "api::page.page",
 }: {
   fullPath?: string
-  locale: AppLocale
+  locale: Locale
   customMetadata?: Metadata
   // Add more content types here if we want to fetch SEO components for them
   uid?: Extract<UID.ContentType, "api::page.page">
 }): Promise<Metadata | null> {
   const t = await getTranslations({ locale, namespace: "seo" })
-
-  const siteUrl = env.APP_PUBLIC_URL
-
+  const siteUrl = getEnvVar("APP_PUBLIC_URL")
   if (!siteUrl) {
-    console.error(
-      "Please provide APP_PUBLIC_URL (public URL of site) for SEO metadata generation."
-    )
+    console.warn("APP_PUBLIC_URL is not defined, cannot generate metadata")
     return null
   }
 
-  const defaultMeta: Metadata = getDefaultMetadata(customMetadata, siteUrl, t)
+  const defaultMeta: Metadata = getDefaultMetadata(siteUrl, t)
   const defaultOgMeta: Metadata["openGraph"] = getDefaultOgMeta(
     locale,
     fullPath,
@@ -65,6 +69,7 @@ export async function getMetadataFromStrapi({
       defaultMeta,
       defaultOgMeta,
       defaultTwitterMeta,
+      customMetadata,
       uid
     )
   } catch (e: unknown) {
@@ -79,22 +84,24 @@ export async function getMetadataFromStrapi({
 }
 
 async function fetchAndMapStrapiMetadata(
-  locale: AppLocale,
+  locale: Locale,
   fullPath: string | null,
   defaultMeta: Metadata,
   defaultOgMeta: Metadata["openGraph"],
   defaultTwitterMeta: Metadata["twitter"],
+  customMetadata?: Metadata,
   uid: Extract<UID.ContentType, "api::page.page"> = "api::page.page"
 ) {
+  const forbidIndexing = !isProduction()
   const [seoRes, pageRes] = await Promise.all([
     fetchSeo(uid, fullPath, locale),
     fullPath ? fetchPage(fullPath, locale) : null,
   ])
 
   const seo = seoRes?.data?.seo
+  const { localizations } = seoRes?.data || {}
   const pageData = pageRes?.data || seoRes?.data
 
-  // Generate comprehensive fallbacks from page data
   const fallbackTitle = pageData?.title || pageData?.breadcrumbTitle
   const fallbackMetaTitle = generateMetaTitle(fallbackTitle, seo?.siteName)
   const fallbackDescription =
@@ -106,6 +113,7 @@ async function fetchAndMapStrapiMetadata(
     pageData?.slug
   )
 
+  const siteUrl = getEnvVar("APP_PUBLIC_URL")
   const strapiMeta: Metadata = {
     title: seo?.metaTitle || fallbackMetaTitle || fallbackTitle,
     description: seo?.metaDescription || fallbackDescription,
@@ -115,37 +123,42 @@ async function fetchAndMapStrapiMetadata(
     alternates: {
       canonical:
         seo?.canonicalUrl ||
-        (fullPath ? `${env.APP_PUBLIC_URL}/${locale}${fullPath}` : undefined),
+        (fullPath && siteUrl
+          ? `${siteUrl}/${locale}${fullPath}`
+          : undefined),
     },
   }
 
-  const strapiOgMeta: Metadata["openGraph"] = {
-    siteName: seo?.siteName ?? undefined,
-    title: seo?.metaTitle || fallbackTitle,
-    description: seo?.metaDescription || fallbackDescription,
-    emails: seo?.email ?? undefined,
-    images: seo?.metaImage
-      ? [
-          {
-            url: seo.metaImage.url,
-            width: seo.metaImage.width,
-            height: seo.metaImage.height,
-            alt: seo.metaImage.alternativeText,
-          },
-        ]
-      : undefined,
-  }
+  const robots = getMetaRobots(seo?.metaRobots, forbidIndexing)
+  const alternates = getMetaAlternates({
+    seo,
+    fullPath,
+    locale,
+    localizations,
+  })
+  const strapiSocialMeta: SocialMetadata = preprocessSocialMetadata(
+    seo,
+    alternates?.canonical
+  )
 
   const finalMetadata = {
     ...mergeWith(defaultMeta, strapiMeta, seoMergeCustomizer),
-    openGraph: mergeWith(defaultOgMeta, strapiOgMeta, seoMergeCustomizer),
+    openGraph: mergeWith(
+      defaultOgMeta,
+      strapiSocialMeta.openGraph,
+      seoMergeCustomizer
+    ),
+    twitter: mergeWith(
+      defaultTwitterMeta,
+      strapiSocialMeta.twitter,
+      seoMergeCustomizer
+    ),
+    robots,
+    alternates,
+    ...customMetadata,
   }
 
-  // Debug in development
   debugSeoGeneration(finalMetadata, pageData, seo, fullPath || "Unknown page")
 
   return finalMetadata
 }
-
-const seoMergeCustomizer = (defaultValue: unknown, strapiValue: unknown) =>
-  strapiValue ?? defaultValue

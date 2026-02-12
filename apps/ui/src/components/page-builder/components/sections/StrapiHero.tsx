@@ -1,11 +1,10 @@
-import { Data } from "@repo/strapi"
+import { Data } from "@repo/strapi-types"
 import { Check } from "lucide-react"
 
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
-import Heading from "@/components/typography/Heading"
-import { Paragraph } from "@/components/typography/Paragraph"
+import { Typography } from "@/components/typography"
 
 export function StrapiHero({
   component,
@@ -14,15 +13,19 @@ export function StrapiHero({
 }) {
   return (
     <section style={{ backgroundColor: component.bgColor ?? "transparent" }}>
-      <Container className="grid gap-6 px-4 py-8 md:grid-cols-12 lg:py-12 xl:gap-0">
-        <div className="mr-auto flex w-full flex-col justify-center md:col-span-6">
-          <Heading
+      <Container className="flex flex-col gap-6 px-4 py-8 md:flex-row lg:py-12 xl:gap-0">
+        <div
+          className={`flex w-full flex-col justify-center ${
+            component.image?.media ? "md:w-1/2" : "md:w-full"
+          }`}
+        >
+          <Typography
             tag="h1"
             variant="heading1"
             className="max-w-2xl text-left text-2xl font-bold text-gray-900 md:text-center md:text-4xl lg:text-5xl"
           >
             {component.title}
-          </Heading>
+          </Typography>
           {component.subTitle && (
             <Paragraph className="mb-6 max-w-2xl text-left text-base text-gray-600 md:text-center md:text-lg">
               {component.subTitle}
@@ -33,17 +36,17 @@ export function StrapiHero({
             component.steps.map((step) => (
               <div key={step.id} className="flex items-center gap-1 py-2">
                 <Check className="text-primary-500" />
-                <Paragraph>{step.text}</Paragraph>
+                <Typography>{step.text}</Typography>
               </div>
             ))}
 
           {component.links && (
-            <div className="space-x flex flex-col gap-2 pt-4 lg:flex-row">
+            <div className="flex flex-col gap-2 pt-4 lg:flex-row lg:gap-4">
               {component.links.map((link, i) => (
                 <StrapiLink
                   key={i}
                   component={link}
-                  className="focus:ring-primary-300 bg-primary mr-3 inline-flex w-full items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium text-white focus:ring-4 lg:w-fit"
+                  className="inline-flex w-full items-center justify-center rounded-lg bg-neutral-900 px-5 py-3 text-base font-medium text-white transition-colors hover:bg-neutral-800 focus:ring-2 focus:ring-neutral-400 focus:outline-none lg:w-fit"
                 />
               ))}
             </div>

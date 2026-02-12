@@ -1,21 +1,21 @@
 {
   "collectionName": "components_seo_utilities_seos",
   "info": {
-    "displayName": "seo",
+    "displayName": "Seo",
     "icon": "search",
     "description": ""
   },
   "options": {},
   "attributes": {
     "metaTitle": {
-      "required": false,
       "type": "string",
-      "maxLength": 60
+      "maxLength": 60,
+      "required": false
     },
     "metaDescription": {
       "type": "string",
-      "required": false,
-      "maxLength": 160
+      "maxLength": 160,
+      "required": false
     },
     "metaImage": {
       "type": "media",
@@ -29,13 +29,17 @@
       "type": "text",
       "regex": "[^,]+"
     },
+    "twitter": {
+      "type": "component",
+      "component": "seo-utilities.seo-twitter",
+      "repeatable": false
+    },
+    "og": {
+      "type": "component",
+      "component": "seo-utilities.seo-og",
+      "repeatable": false
+    },
     "applicationName": {
-      "type": "string"
-    },
-    "siteName": {
-      "type": "string"
-    },
-    "email": {
       "type": "string"
     },
     "canonicalUrl": {
@@ -43,6 +47,7 @@
     },
     "metaRobots": {
       "type": "enumeration",
+      "default": "all",
       "enum": [
         "all",
         "index",
@@ -54,8 +59,7 @@
         "noarchive",
         "nosnippet",
         "max-snippet"
-      ],
-      "default": "all"
+      ]
     },
     "structuredData": {
       "type": "json"

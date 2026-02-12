@@ -1,21 +1,26 @@
 {
   "seo": {
-    "metaTitle": "DEV-TEMPLATE-SEO",
-    "metaDescription": "DEV-TEMPLATE-SEO",
-    "metaImageUrl": "DEV-TEMPLATE-SEO",
-    "keywords": "DEV-TEMPLATE-SEO",
-    "metaRobots": "DEV-TEMPLATE-SEO",
-    "applicationName": "DEV-TEMPLATE-SEO",
-    "siteName": "DEV-TEMPLATE-SEO",
-    "email": "DEV-TEMPLATE-SEO",
+    "metaTitle": "SEO-TITLE",
+    "metaDescription": "SEO-DESCRIPTION",
+    "metaImage": "SEO-IMAGE",
+    "metaRobots": "SEO-ROBOTS",
+    "keywords": "SEO-KEYWORDS",
+    "applicationName": "SEO-APPLICATION-NAME",
+    "og": {
+      "title": "SEO-OG-TITLE",
+      "description": "SEO-OG-DESCRIPTION",
+      "url": "SEO-OG-URL",
+      "siteName": "SEO-OG-SITE-NAME",
+      "image": "SEO-OG-IMAGE"
+    },
     "twitter": {
-      "card": "DEV-TEMPLATE-SEO",
-      "title": "DEV-TEMPLATE-SEO",
-      "description": "DEV-TEMPLATE-SEO",
-      "siteId": "DEV-TEMPLATE-SEO",
-      "creator": "DEV-TEMPLATE-SEO",
-      "creatorId": "DEV-TEMPLATE-SEO",
-      "imageUrl": "DEV-TEMPLATE-SEO"
+      "card": "SEO-TWITTER-CARD",
+      "title": "SEO-TWITTER-TITLE",
+      "description": "SEO-TWITTER-DESCRIPTION",
+      "siteId": "SEO-TWITTER-SITE-ID",
+      "creator": "SEO-TWITTER-CREATOR",
+      "creatorId": "SEO-TWITTER-CREATOR-ID",
+      "imageUrl": "SEO-TWITTER-IMAGE-URL"
     }
   },
 
@@ -98,6 +103,7 @@
       "invalid_type": "Požadovaný typ je {expected}, zadán byl {received}",
       "invalid_type_received_undefined": "Pole je požadované",
       "invalid_literal": "Nesprávná hodnota, očekává sa {expected}",
+      "invalid_union": "Nesprávná hodnota",
 
       "invalid_string": {
         "regex": "Nesprávný formát"
@@ -170,13 +176,15 @@
         "checkCredentials": "Zkontrolujte prosím přihlašovací údaje"
       },
       "errors": {
-        "CredentialsSignin": "Zadal/a jste nesprávné přihlašovací údaje."
+        "CredentialsSignin": "Zadal/a jste nesprávné přihlašovací údaje.",
+        "unexpectedError": "Registrace selhala. Zkuste to prosím později."
       },
       "header": "Přihlášení",
       "description": "Zadejte přihlašovací údaje.",
       "email": "E-mail",
       "password": "Heslo",
       "submit": "Přihlásit se",
+      "signingIn": "Přihlašuji vás...",
       "forgotPassword": "Zapomenuté heslo",
       "createAccount": "Vytvořit účet"
     },
@@ -222,7 +230,7 @@
     "accountActivation": {
       "successfullySet": "Účet byl úspěšně aktivován. Můžete se přihlásit.",
       "errors": {
-        "Incorrect code provided": "Byl vám vygenerován nesprávný odkaz. Kontaktujte podporu."
+        "incorrectCodeProvided": "Byl vám vygenerován nesprávný odkaz. Kontaktujte podporu."
       },
       "welcome": "Vítej",
       "activateAccount": "Byl Vám založen nový účet s emailem {email}.",
@@ -240,7 +248,10 @@
       "description": "Zvolte si nové heslo, které budete používat k přihlašování.",
       "submit": "Nastavit heslo",
       "password": "Nové heslo",
-      "confirmPassword": "Potvrdit heslo"
+      "confirmPassword": "Potvrdit heslo",
+      "errors": {
+        "incorrectCodeProvided": "Neplatný nebo expirovaný kód. Požádejte prosím o obnovení hesla znovu."
+      }
     },
 
     "forgotPassword": {
@@ -248,7 +259,22 @@
       "header": "Zapomenuté heslo",
       "description": "Zadejte email se kterým se zvyknete přihlašovat. Na tento email odešleme instrukce k obnově hesla.",
       "email": "E-mail",
-      "submit": "Obnovit účet"
+      "submit": "Obnovit účet",
+      "errors": {
+        "failedToSendPasswordResetEmail": "Nepodařilo se odeslat email s instrukcemi pro obnovení hesla."
+      }
+    },
+
+    "oauth": {
+      "orContinueWith": "Nebo pokračujte s",
+      "signingIn": "Přihlašuji vás...",
+      "signedInSuccessfully": "Úspěšně přihlášen",
+      "redirecting": "Přesměrovávám...",
+      "signInFailed": "Přihlášení selhalo",
+      "errors": {
+        "signInFailed": "OAuth přihlášení selhalo"
+      },
+      "withGithub": "Přihlásit se přes GitHub"
     }
   }
 }

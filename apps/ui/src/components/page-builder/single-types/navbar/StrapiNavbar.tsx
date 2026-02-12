@@ -1,8 +1,7 @@
+import { use } from "react"
 import Image from "next/image"
-import { Data } from "@repo/strapi"
-
-import { AppLocale } from "@/types/general"
-
+import { Data } from "@repo/strapi-types"
+import { Locale } from "next-intl"
 import { fetchNavbar } from "@/lib/strapi-api/content/server"
 import AppLink from "@/components/elementary/AppLink"
 import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
@@ -14,16 +13,14 @@ import StrapiSocialIcon from "@/components/page-builder/components/utilities/Str
 
 import { StrapiMobileNavbar } from "./StrapiMobileNavbar"
 
-// import { LoggedUserMenu } from "@/components/page-builder/single-types/navbar/LoggedUserMenu"
-
 const hardcodedLinks: NonNullable<
   Data.ContentType<"api::navbar.navbar">["links"]
 > = [
   //{ id: "client-page", href: "/client-page", label: "Client Page" }
 ]
 
-export async function StrapiNavbar({ locale }: { readonly locale: AppLocale }) {
-  const response = await fetchNavbar(locale)
+export function StrapiNavbar({ locale }: { readonly locale: Locale }) {
+  const response = use(fetchNavbar(locale))
   const navbar = response?.data
 
   if (navbar == null) {

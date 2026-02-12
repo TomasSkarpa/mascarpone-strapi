@@ -3,12 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import * as z from "zod"
 
 import { PASSWORD_MIN_LENGTH } from "@/lib/constants"
 import { Link } from "@/lib/navigation"
 import { cn } from "@/lib/styles"
-import { useUserMutations } from "@/hooks/useUser"
+import { useUserMutations } from "@/hooks/useUserMutations"
 import { AppField } from "@/components/forms/AppField"
 import { AppForm } from "@/components/forms/AppForm"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -20,7 +21,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { useToast } from "@/components/ui/use-toast"
 
 // To enable email confirmation, Strapi Users-Permissions plugin must be configured (e.g. email provider, redirect URL)
 // http://localhost:1337/admin/settings/users-permissions/advanced-settings
@@ -28,7 +28,6 @@ const ENABLE_EMAIL_CONFIRMATION = false
 
 export function RegisterForm() {
   const t = useTranslations("auth.register")
-  const { toast } = useToast()
   const { registerMutation } = useUserMutations()
 
   const form = useForm<z.infer<FormSchemaType>>({
@@ -45,46 +44,47 @@ export function RegisterForm() {
   async function onSubmit(values: z.infer<FormSchemaType>) {
     registerMutation.mutate(
       {
-        username: values.email,
         email: values.email,
         password: values.password,
       },
       {
+        onSuccess: () => {
+          // User is registered AND signed in automatically!
+
+          if (!ENABLE_EMAIL_CONFIRMATION) {
+            // Use full page navigation to ensure session is reloaded
+            window.location.href = "/"
+          }
+        },
         onError: (error) => {
+          const errorMessage = error?.message
+
+          // Try to match common errors to translated messages
           const errorMap = {
             "already taken": t("errors.emailUsernameTaken"),
           } as const
 
-          let errorMessage = t("errors.unexpectedError")
+          const errorKey = Object.keys(errorMap).find(
+            (key): key is keyof typeof errorMap =>
+              errorMessage?.includes(key) ?? false
+          )
 
-          if (error instanceof Error) {
-            const errorKey = Object.keys(errorMap).find(
-              (key): key is keyof typeof errorMap =>
-                error.message?.includes(key)
-            )
+          const displayMessage = errorKey
+            ? errorMap[errorKey]
+            : (errorMessage ?? t("errors.unexpectedError"))
 
-            errorMessage = errorKey ? errorMap[errorKey] : errorMessage
-          }
-
-          toast({
-            variant: "destructive",
-            description: errorMessage,
-          })
+          toast.error(displayMessage)
         },
       }
     )
   }
 
-  if (registerMutation.isSuccess) {
+  if (registerMutation.isSuccess && ENABLE_EMAIL_CONFIRMATION) {
     // This message is relevant if system requires email verification
-    // If user is `confirmed` immediately, this message is not needed
-    // and user should be redirected to sign in page
     return (
       <Card className="m-auto w-[400px]">
         <CardHeader>
-          <h2 className="mx-auto">
-            {ENABLE_EMAIL_CONFIRMATION ? t("checkEmail") : t("status.success")}
-          </h2>
+          <h2 className="mx-auto">{t("checkEmail")}</h2>
         </CardHeader>
         <CardContent>
           <Link
@@ -129,9 +129,10 @@ export function RegisterForm() {
           <Button
             type="submit"
             size="lg"
-            variant="default"
+            variant="outline"
             form={registerFormName}
-            className="w-full"
+            className="w-full cursor-pointer"
+            disabled={registerMutation.isPending}
           >
             {t("submit")}
           </Button>

@@ -39,6 +39,8 @@ This is a personalized version of the Strapi-Next.js monorepo starter, customize
 
 ## 🚀 Quick Start
 
+[![Launch Strapi + Next.js Monorepo — Live in 5 Minutes](https://img.youtube.com/vi/VZlJZuurUH8/maxresdefault.jpg)](https://www.youtube.com/watch?v=VZlJZuurUH8 "Watch on YouTube")
+
 ### Prerequisites
 
 - Docker & Docker Compose
