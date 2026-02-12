@@ -36,5 +36,8 @@
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     ".mule": true
-  }
+  },
+  "git.inputValidation": true,
+  "git.inputValidationSubjectLength": 72,
+  "git.inputValidationLength": 80
 }
