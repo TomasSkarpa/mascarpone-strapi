@@ -123,9 +123,7 @@ async function fetchAndMapStrapiMetadata(
     alternates: {
       canonical:
         seo?.canonicalUrl ||
-        (fullPath && siteUrl
-          ? `${siteUrl}/${locale}${fullPath}`
-          : undefined),
+        (fullPath && siteUrl ? `${siteUrl}/${locale}${fullPath}` : undefined),
     },
   }
 

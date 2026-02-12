@@ -114,6 +114,5 @@ const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["fin
       "forms.contact-form": { populate: { gdpr: true } },
       "utilities.ck-editor-content": true,
     },
-  },
-  seo: seoPopulate,
-}
+    seo: seoPopulate,
+  }

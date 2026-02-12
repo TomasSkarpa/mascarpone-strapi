@@ -226,29 +226,6 @@ export interface SectionsTimeline extends Struct.ComponentSchema {
   }
 }
 
-export interface SeoUtilitiesMetaSocial extends Struct.ComponentSchema {
-  collectionName: "components_seo_utilities_meta_socials"
-  info: {
-    displayName: "metaSocial"
-    icon: "project-diagram"
-  }
-  attributes: {
-    description: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 65
-      }>
-    image: Schema.Attribute.Media<"images" | "files" | "videos">
-    socialNetwork: Schema.Attribute.Enumeration<["Facebook", "Twitter"]> &
-      Schema.Attribute.Required
-    title: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.SetMinMaxLength<{
-        maxLength: 60
-      }>
-  }
-}
-
 export interface SeoUtilitiesSeo extends Struct.ComponentSchema {
   collectionName: "components_seo_utilities_seos"
   info: {
@@ -284,9 +261,9 @@ export interface SeoUtilitiesSeo extends Struct.ComponentSchema {
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 60
       }>
-    siteName: Schema.Attribute.String
     og: Schema.Attribute.Component<"seo-utilities.seo-og", false>
     structuredData: Schema.Attribute.JSON
+    twitter: Schema.Attribute.Component<"seo-utilities.seo-twitter", false>
   }
 }
 
@@ -396,9 +373,9 @@ export interface UtilitiesBasicImage extends Struct.ComponentSchema {
     alt: Schema.Attribute.String & Schema.Attribute.Required
     fallbackSrc: Schema.Attribute.String
     height: Schema.Attribute.Integer
-    width: Schema.Attribute.Integer
     media: Schema.Attribute.Media<"images" | "videos"> &
       Schema.Attribute.Required
+    width: Schema.Attribute.Integer
   }
 }
 
@@ -418,18 +395,6 @@ export interface UtilitiesCkEditorContent extends Struct.ComponentSchema {
   }
 }
 
-export interface UtilitiesDesignerTitle extends Struct.ComponentSchema {
-  collectionName: "components_utilities_designer_titles"
-  info: {
-    description: "Animated title that transforms text to show nickname origin"
-    displayName: "Designer Title"
-    icon: "magic"
-  }
-  attributes: {
-    config: Schema.Attribute.JSON & Schema.Attribute.Required
-  }
-}
-
 export interface UtilitiesCkEditorText extends Struct.ComponentSchema {
   collectionName: "components_utilities_ck_editor_texts"
   info: {
@@ -443,6 +408,18 @@ export interface UtilitiesCkEditorText extends Struct.ComponentSchema {
           preset: "simpleCkEditor"
         }
       >
+  }
+}
+
+export interface UtilitiesDesignerTitle extends Struct.ComponentSchema {
+  collectionName: "components_utilities_designer_titles"
+  info: {
+    description: "Animated title that transforms text to show nickname origin"
+    displayName: "Designer Title"
+    icon: "magic"
+  }
+  attributes: {
+    config: Schema.Attribute.JSON & Schema.Attribute.Required
   }
 }
 
@@ -648,7 +625,6 @@ declare module "@strapi/strapi" {
       "sections.project-showcase": SectionsProjectShowcase
       "sections.quote-carousel": SectionsQuoteCarousel
       "sections.timeline": SectionsTimeline
-      "seo-utilities.meta-social": SeoUtilitiesMetaSocial
       "seo-utilities.seo": SeoUtilitiesSeo
       "seo-utilities.seo-og": SeoUtilitiesSeoOg
       "seo-utilities.seo-twitter": SeoUtilitiesSeoTwitter
