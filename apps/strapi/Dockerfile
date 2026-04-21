@@ -69,8 +69,9 @@ COPY turbo.json turbo.json
 
 RUN turbo run build
 
-# Remove devDependencies after build to reduce image size (CI=true: pnpm refuses without TTY otherwise)
-RUN CI=true pnpm prune --prod
+# Remove devDependencies after build to reduce image size (CI=true: pnpm refuses without TTY otherwise).
+# --ignore-scripts: root package.json has "prepare": "husky"; after prune husky is gone and prepare would fail.
+RUN CI=true pnpm prune --prod --ignore-scripts
 
 # ---
 FROM node:22-alpine AS runner
