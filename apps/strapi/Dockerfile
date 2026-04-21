@@ -69,8 +69,8 @@ COPY turbo.json turbo.json
 
 RUN turbo run build
 
-# Remove devDependencies after build to reduce image size
-RUN pnpm prune --prod
+# Remove devDependencies after build to reduce image size (CI=true: pnpm refuses without TTY otherwise)
+RUN CI=true pnpm prune --prod
 
 # ---
 FROM node:22-alpine AS runner
