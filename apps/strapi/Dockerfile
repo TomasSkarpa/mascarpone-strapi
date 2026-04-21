@@ -94,4 +94,6 @@ ENV PATH=/app/apps/${APP}/node_modules/.bin:$PATH
 USER strapi
 WORKDIR /app/apps/${APP}
 EXPOSE ${PORT:-1337}
-CMD ["./node_modules/.bin/strapi", "start"]
+# Official node image entrypoint prepends `node` when `command -v` does not resolve the first arg;
+# a relative `./node_modules/.bin/strapi` then becomes `node ./.../strapi` and breaks (MODULE_NOT_FOUND).
+CMD ["node", "./node_modules/@strapi/strapi/bin/strapi.js", "start"]
