@@ -109,8 +109,8 @@ To build and run Strapi in Docker container use [Dockerfile](Dockerfile) prepare
 # build image, name and tag it
 docker build -t starter-strapi:latest -f apps/strapi/Dockerfile .
 
-# or build image and set APP_URL build arg to override localhost:1337 (default public URL of Admin panel)
-docker build -t starter-strapi:latest -f apps/strapi/Dockerfile --build-arg APP_URL=https://cms.strapi-domain.dev .
+# Public URL (e.g. https://dev.hannie.space) is set at runtime via APP_URL in the container env — the Dockerfile does not define an APP_URL build-arg.
+docker build -t starter-strapi:latest -f apps/strapi/Dockerfile .
 ```
 
 ### Run

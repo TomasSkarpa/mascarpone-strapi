@@ -1,0 +1,55 @@
+name: Deploy Strapi to home server
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-home-server
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  DEPLOY_PATH: /home/home/mascarpone-deploy
+  IMAGE_TAG: main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Strapi image
+        run: |
+          set -euo pipefail
+          OWNER_LOWER="$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')"
+          IMAGE="ghcr.io/${OWNER_LOWER}/mascarpone-strapi:${IMAGE_TAG}"
+          docker build -f apps/strapi/Dockerfile -t "${IMAGE}" .
+          docker push "${IMAGE}"
+
+      - name: Deploy on server
+        run: |
+          set -euo pipefail
+          cd "${DEPLOY_PATH}"
+          docker compose pull strapi
+          docker compose up -d
+
+      - name: Verify Strapi responds
+        run: |
+          set -euo pipefail
+          sleep 8
+          curl -fsS -o /dev/null "http://127.0.0.1:1337/"
+          echo "Strapi HTTP check OK on port 1337"
