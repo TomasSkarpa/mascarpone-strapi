@@ -69,16 +69,19 @@ COPY turbo.json turbo.json
 
 RUN turbo run build
 
-# Remove devDependencies after build to reduce image size (CI=true: pnpm refuses without TTY otherwise).
-# --ignore-scripts: root package.json has "prepare": "husky"; after prune husky is gone and prepare would fail.
-RUN CI=true pnpm prune --prod --ignore-scripts
+# Do not run `pnpm prune --prod` here: in a pnpm + turbo-pruned monorepo it can drop or relocate
+# packages so `apps/strapi/node_modules/@strapi/strapi/...` is missing at runtime (MODULE_NOT_FOUND).
+# Image is larger; acceptable for self-hosted. (Alternatives: pnpm deploy, or a slimmer per-app stage.)
 
 # ---
 FROM node:22-alpine AS runner
 
 RUN apk add --no-cache vips-dev
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable && corepack prepare pnpm@10.28.1 --activate
 
-ARG APP
+ARG APP=strapi
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
@@ -92,8 +95,6 @@ COPY --from=builder --chown=strapi:strapi /app /app
 ENV PATH=/app/apps/${APP}/node_modules/.bin:$PATH
 
 USER strapi
-WORKDIR /app/apps/${APP}
-EXPOSE ${PORT:-1337}
-# Official node image entrypoint prepends `node` when `command -v` does not resolve the first arg;
-# a relative `./node_modules/.bin/strapi` then becomes `node ./.../strapi` and breaks (MODULE_NOT_FOUND).
-CMD ["node", "./node_modules/@strapi/strapi/bin/strapi.js", "start"]
+EXPOSE 1337
+# Monorepo root + pnpm filter match how dependencies are linked after turbo prune
+CMD ["sh", "-c", "cd /app && exec pnpm --filter @repo/strapi start"]
