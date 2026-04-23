@@ -94,11 +94,11 @@ export default function StrapiPage(props: PageProps<"/[locale]/[[...rest]]">) {
   return (
     <>
       <StrapiStructuredData
-        structuredData={data?.seo?.structuredData}
-        pageTitle={data?.title}
-        pageDescription={data?.seo?.metaDescription}
+        structuredData={data?.seo?.structuredData ?? undefined}
+        pageTitle={data?.title ?? undefined}
+        pageDescription={data?.seo?.metaDescription ?? undefined}
         pageUrl={`${process.env.APP_PUBLIC_URL || ""}/${params.locale}${fullPath}`}
-        siteName={data?.seo?.siteName}
+        siteName={data?.seo?.og?.siteName ?? undefined}
       />
 
       <main className={cn("flex w-full flex-col overflow-hidden")}>
