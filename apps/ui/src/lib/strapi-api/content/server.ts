@@ -152,7 +152,7 @@ export async function fetchFooter(locale: Locale) {
 
 // ------ Project fetching functions
 
-export async function fetchAllProjects(locale: AppLocale) {
+export async function fetchAllProjects(locale: Locale) {
   try {
     return await PublicStrapiClient.fetchAll("api::project.project", {
       locale,
@@ -175,7 +175,7 @@ export async function fetchAllProjects(locale: AppLocale) {
   }
 }
 
-export async function fetchProject(documentId: string, locale: AppLocale) {
+export async function fetchProject(documentId: string, locale: Locale) {
   try {
     return await PublicStrapiClient.fetchOne(
       "api::project.project",
@@ -203,7 +203,7 @@ export async function fetchProject(documentId: string, locale: AppLocale) {
   }
 }
 
-export async function fetchProjectsPage(locale: AppLocale) {
+export async function fetchProjectsPage(locale: Locale) {
   try {
     return await PublicStrapiClient.fetchOneByFullPath(
       "api::page.page",

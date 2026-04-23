@@ -102,15 +102,21 @@ async function fetchAndMapStrapiMetadata(
   const { localizations } = seoRes?.data || {}
   const pageData = pageRes?.data || seoRes?.data
 
-  const fallbackTitle = pageData?.title || pageData?.breadcrumbTitle
-  const fallbackMetaTitle = generateMetaTitle(fallbackTitle, seo?.siteName)
+  const fallbackTitle =
+    pageData?.title ?? pageData?.breadcrumbTitle ?? undefined
+  const fallbackMetaTitle = generateMetaTitle(
+    fallbackTitle,
+    seo?.og?.siteName ?? undefined
+  )
+  const pageContentBlocks =
+    pageData && "content" in pageData ? pageData.content : undefined
   const fallbackDescription =
-    generateDescriptionFromContent(pageData?.content) ||
+    generateDescriptionFromContent(pageContentBlocks ?? undefined) ||
     generateDescriptionFromTitle(fallbackTitle)
   const fallbackKeywords = generateKeywordsFromPage(
-    pageData?.title,
-    pageData?.breadcrumbTitle,
-    pageData?.slug
+    pageData?.title ?? undefined,
+    pageData?.breadcrumbTitle ?? undefined,
+    pageData?.slug ?? undefined
   )
 
   const siteUrl = getEnvVar("APP_PUBLIC_URL")

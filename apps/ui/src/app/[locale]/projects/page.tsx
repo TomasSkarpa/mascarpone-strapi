@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import type { Locale } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 
 import type { PageProps } from "@/types/next"
@@ -19,14 +20,15 @@ type Props = PageProps
 
 export default async function ProjectsPage(props: Props) {
   const params = await props.params
+  const locale = params.locale as Locale
 
-  setRequestLocale(params.locale)
+  setRequestLocale(locale)
 
   const [projectsResponse, homePageResponse, projectsPageResponse] =
     await Promise.all([
-      fetchAllProjects(params.locale),
-      fetchPage("/", params.locale),
-      fetchProjectsPage(params.locale),
+      fetchAllProjects(locale),
+      fetchPage("/", locale),
+      fetchProjectsPage(locale),
     ])
 
   if (!projectsResponse?.data?.length) {
@@ -40,6 +42,7 @@ export default async function ProjectsPage(props: Props) {
     "Home"
   const t = await getTranslations("projects")
   const projectsPageData = projectsPageResponse?.data
+  const projectsPageContent = projectsPageData?.content ?? []
 
   return (
     <main className={cn("flex w-full flex-col overflow-hidden")}>
@@ -66,7 +69,7 @@ export default async function ProjectsPage(props: Props) {
                 <ProjectTile
                   key={project.documentId}
                   project={project}
-                  locale={params.locale}
+                  locale={locale}
                 />
               ))}
             </div>
@@ -75,8 +78,8 @@ export default async function ProjectsPage(props: Props) {
       </div>
 
       {/* Dynamic content below projects */}
-      {projectsPageData?.content?.length > 0 &&
-        projectsPageData.content
+      {projectsPageContent.length > 0 &&
+        projectsPageContent
           .filter((comp) => comp != null)
           .map((comp) => {
             const name = comp.__component

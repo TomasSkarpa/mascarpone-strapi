@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 
 interface StrapiQuoteCarouselProps {
   readonly component:
@@ -22,7 +22,8 @@ export function StrapiQuoteCarousel({
   const currentQuote = component.quotes?.[currentIndex] || null
 
   useEffect(() => {
-    if (!component.quotes?.length) return
+    const quotes = component.quotes
+    if (!quotes?.length) return
 
     const calculateReadingTime = (text: string) => {
       const words = text.split(" ").length
@@ -36,15 +37,15 @@ export function StrapiQuoteCarousel({
     let timeoutId: NodeJS.Timeout
 
     const scheduleNext = () => {
-      if (component.quotes.length <= 1) return
+      if (quotes.length <= 1) return
 
       const nextInterval = calculateReadingTime(
-        component.quotes[currentIndex]?.text || ""
+        quotes[currentIndex]?.text || ""
       )
       timeoutId = setTimeout(() => {
         setIsVisible(false)
         setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % component.quotes.length)
+          setCurrentIndex((prev) => (prev + 1) % quotes.length)
           setIsVisible(true)
           scheduleNext()
         }, 500)

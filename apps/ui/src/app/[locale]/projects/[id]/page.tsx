@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import type { Locale } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 
 import type { PageProps } from "@/types/next"
@@ -18,16 +19,18 @@ type Props = PageProps<{
 
 export default async function ProjectDetailPage(props: Props) {
   const params = await props.params
+  const locale = params.locale as Locale
 
-  setRequestLocale(params.locale)
+  setRequestLocale(locale)
 
-  const response = await fetchProject(params.id, params.locale)
+  const response = await fetchProject(params.id, locale)
 
   if (!response?.data) {
     notFound()
   }
 
   const project = response.data
+  const pageContent = project.content ?? []
   const t = await getTranslations("projects")
 
   return (
@@ -65,7 +68,7 @@ export default async function ProjectDetailPage(props: Props) {
                 <div className="relative mb-8 aspect-video overflow-hidden rounded-lg">
                   <Image
                     src={formatStrapiMediaUrl(project.image.url)}
-                    alt={project.title}
+                    alt={project.title ?? ""}
                     fill
                     className="object-cover"
                   />
@@ -103,7 +106,7 @@ export default async function ProjectDetailPage(props: Props) {
                     {project.links.map((link, index) => (
                       <a
                         key={index}
-                        href={link.url}
+                        href={link.url ?? undefined}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="rounded-lg bg-blue-600 px-6 py-3 text-white transition-colors hover:bg-blue-700"
@@ -120,8 +123,8 @@ export default async function ProjectDetailPage(props: Props) {
       </div>
 
       {/* Dynamic content below project details */}
-      {project.content?.length > 0 &&
-        project.content
+      {pageContent.length > 0 &&
+        pageContent
           .filter((comp) => comp != null)
           .map((comp) => {
             const name = comp.__component

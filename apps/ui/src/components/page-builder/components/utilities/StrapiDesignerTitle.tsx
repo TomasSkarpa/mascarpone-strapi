@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 
 interface DesignerTitleConfig {
   originalName: string
@@ -27,7 +27,7 @@ export function StrapiDesignerTitle({
 }: {
   readonly component: Data.Component<"utilities.designer-title">
 }) {
-  const config = component.config as DesignerTitleConfig
+  const config = component.config as unknown as DesignerTitleConfig
 
   if (config.animationType === "typewriter") {
     return <TypewriterAnimation config={config} />
@@ -183,10 +183,11 @@ function TypewriterEditAnimation({ config }: { config: DesignerTitleConfig }) {
   }, [])
 
   useEffect(() => {
-    if (!config.editSteps || isProcessing) return
+    const editSteps = config.editSteps
+    if (!editSteps || isProcessing) return
 
     const executeStep = async (stepIndex: number) => {
-      if (stepIndex >= config.editSteps.length) {
+      if (stepIndex >= editSteps.length) {
         // Pause at final result, then restart
         await new Promise<void>((resolve) =>
           setTimeout(resolve, config.pauseDuration * 2)
@@ -197,7 +198,11 @@ function TypewriterEditAnimation({ config }: { config: DesignerTitleConfig }) {
       }
 
       setIsProcessing(true)
-      const step = config.editSteps[stepIndex]
+      const step = editSteps[stepIndex]
+      if (!step) {
+        setIsProcessing(false)
+        return
+      }
 
       if (step.action === "add" && step.text) {
         // Add characters one by one
@@ -221,23 +226,24 @@ function TypewriterEditAnimation({ config }: { config: DesignerTitleConfig }) {
             setCursorPosition(currentText.length + i + 1)
           }
         }
-      } else if (step.action === "delete" && step.count) {
+      } else if (step.action === "delete" && step.count != null) {
         // Delete characters one by one
+        const deleteCount = step.count
         if (step.position === "start") {
-          setCursorPosition(step.count)
-          for (let i = 0; i < step.count; i++) {
+          setCursorPosition(deleteCount)
+          for (let i = 0; i < deleteCount; i++) {
             await new Promise<void>((resolve) =>
               setTimeout(resolve, config.animationSpeed)
             )
             setDisplayText((prev) => {
-              const newPos = step.count - i - 1
+              const newPos = deleteCount - i - 1
               setCursorPosition(newPos)
               return prev.slice(0, newPos) + prev.slice(newPos + 1)
             })
           }
         } else {
           setCursorPosition(displayText.length)
-          for (let i = 0; i < step.count; i++) {
+          for (let i = 0; i < deleteCount; i++) {
             await new Promise<void>((resolve) =>
               setTimeout(resolve, config.animationSpeed)
             )

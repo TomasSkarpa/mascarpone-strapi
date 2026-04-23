@@ -1,4 +1,4 @@
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 import { ProjectTile } from "@/components/elementary/ProjectTile"

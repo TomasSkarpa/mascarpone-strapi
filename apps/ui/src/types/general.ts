@@ -5,6 +5,9 @@ type Messages = typeof import("../../locales/en.json")
 
 export interface IntlMessages extends Messages {}
 
+/** Message key path for `next-intl` (nested keys use dot notation). */
+export type IntlKeysPath = string
+
 export interface CustomFetchOptions {
   // do not add locale query params to the request
   doNotAddLocaleQueryParams?: boolean

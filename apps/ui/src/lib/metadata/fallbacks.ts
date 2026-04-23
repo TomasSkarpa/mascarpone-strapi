@@ -1,4 +1,4 @@
-import type { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 
 /**
  * Generate a meta description from page title
@@ -72,13 +72,15 @@ export function generateMetaTitle(
 /**
  * Extract description from page content components
  */
+type ContentBlock = Record<string, unknown> & { __component?: string }
+
 export function generateDescriptionFromContent(
   content?: Data.Component[]
 ): string | undefined {
   if (!content || content.length === 0) return undefined
 
   // Look for text content in various component types
-  for (const component of content) {
+  for (const component of content as ContentBlock[]) {
     if (!component) continue
 
     // Check for hero sections with descriptions

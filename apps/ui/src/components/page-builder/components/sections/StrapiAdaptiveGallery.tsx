@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Container } from "@/components/elementary/Container"
@@ -118,7 +118,8 @@ export function StrapiAdaptiveGallery({
     e.preventDefault()
     setIsDragging(true)
     setHasDragged(false)
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
+    const clientX =
+      "touches" in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
     setDragStart(clientX)
     setDragOffset(0)
   }
@@ -126,7 +127,8 @@ export function StrapiAdaptiveGallery({
   const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDragging) return
     e.preventDefault()
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
+    const clientX =
+      "touches" in e ? (e.touches[0]?.clientX ?? 0) : e.clientX
     const offset = clientX - dragStart
     setDragOffset(offset)
     if (Math.abs(offset) > 5) {

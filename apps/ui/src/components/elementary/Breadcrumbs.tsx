@@ -13,9 +13,10 @@ export function Breadcrumbs({ breadcrumbs, className }: Props) {
     return null
   }
 
+  const first = breadcrumbs[0]
   const isHomepage =
     breadcrumbs.length === 1 &&
-    (breadcrumbs[0].fullPath === "/" || breadcrumbs[0].fullPath === "")
+    (first?.fullPath === "/" || first?.fullPath === "")
 
   if (isHomepage) {
     return null

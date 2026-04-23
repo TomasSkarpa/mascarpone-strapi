@@ -1,4 +1,4 @@
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 
 interface StrapiSocialIconProps {
   readonly component: Data.Component<"utilities.social-icon">

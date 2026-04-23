@@ -24,6 +24,7 @@ export function ImageGallery({
   const isOpen = selectedImage !== null && images[selectedImage]
 
   const nextImage = () => {
+    if (selectedImage == null) return
     if (selectedImage < images.length - 1) {
       onSelectImage(selectedImage + 1)
       setIsZoomed(false)
@@ -32,6 +33,7 @@ export function ImageGallery({
   }
 
   const prevImage = () => {
+    if (selectedImage == null) return
     if (selectedImage > 0) {
       onSelectImage(selectedImage - 1)
       setIsZoomed(false)

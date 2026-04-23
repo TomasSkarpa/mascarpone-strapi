@@ -30,7 +30,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
 
               {Boolean(component.socialIcons?.length) && (
                 <div className="flex items-center gap-4">
-                  {component.socialIcons.map((socialIcon) => (
+                  {component.socialIcons?.map((socialIcon) => (
                     <StrapiSocialIcon
                       key={socialIcon.id}
                       component={socialIcon}
@@ -43,9 +43,9 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
             {/* Navigation Sections */}
             {Boolean(component.sections?.length) && (
               <div
-                className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-${Math.min(component.sections.length, 4)}`}
+                className={`grid gap-8 sm:grid-cols-2 lg:grid-cols-${Math.min(component.sections?.length ?? 0, 4)}`}
               >
-                {component.sections.slice(0, 4).map((section) => (
+                {component.sections?.slice(0, 4).map((section) => (
                   <div key={section.id} className="space-y-4">
                     <h3 className="text-sm font-semibold text-gray-900">
                       {section.title}
@@ -79,7 +79,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
 
             {Boolean(component.links?.length) && (
               <nav className="flex flex-col gap-3 md:flex-row md:flex-wrap md:gap-6">
-                {component.links.map((link, i) => (
+                {component.links?.map((link, i) => (
                   <StrapiLink
                     key={`${link.id}-${i}`}
                     component={link}

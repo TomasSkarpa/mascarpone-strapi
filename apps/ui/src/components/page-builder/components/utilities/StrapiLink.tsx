@@ -1,8 +1,10 @@
 import React from "react"
-import { Data } from "@repo/strapi-types"
+import type { VariantProps } from "class-variance-authority"
+import type { Data } from "@repo/strapi-types"
 
 import AppLink from "@/components/elementary/AppLink"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
+import { buttonVariants } from "@/components/ui/button"
 
 export interface StrapiLinkProps {
   readonly component: Data.Component<"utilities.link"> | undefined | null
@@ -39,6 +41,18 @@ export function getStrapiLinkHref(
   if (pagePath) return pagePath
   if (component.href) return component.href
   return undefined
+}
+
+type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>
+
+function strapiDecorationSizeToAppLinkSize(
+  s: string | null | undefined
+): ButtonSize {
+  if (s == null || s === "default") return "default"
+  if (s === "sm" || s === "lg" || s === "icon") return s
+  if (s === "xs") return "sm"
+  if (s === "icon-xs" || s === "icon-sm" || s === "icon-lg") return "icon"
+  return "default"
 }
 
 export function StrapiLink({
@@ -83,7 +97,7 @@ export function StrapiLink({
         ) : undefined
       }
       variant={variant}
-      size={size}
+      size={strapiDecorationSizeToAppLinkSize(size)}
     >
       {children ?? label}
     </AppLink>

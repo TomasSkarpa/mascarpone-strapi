@@ -1,6 +1,6 @@
 "use client"
 
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
 import { Download } from "lucide-react"
 
 import { Container } from "@/components/elementary/Container"

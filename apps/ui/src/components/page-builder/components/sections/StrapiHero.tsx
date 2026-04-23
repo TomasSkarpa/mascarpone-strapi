@@ -1,4 +1,4 @@
-import { Data } from "@repo/strapi-types"
+import type { Data } from "@repo/strapi-types"
 import { Check } from "lucide-react"
 
 import { Container } from "@/components/elementary/Container"
@@ -27,9 +27,13 @@ export function StrapiHero({
             {component.title}
           </Typography>
           {component.subTitle && (
-            <Paragraph className="mb-6 max-w-2xl text-left text-base text-gray-600 md:text-center md:text-lg">
+            <Typography
+              tag="p"
+              variant="large"
+              className="mb-6 max-w-2xl text-left text-base text-gray-600 md:text-center md:text-lg"
+            >
               {component.subTitle}
-            </Paragraph>
+            </Typography>
           )}
           {component?.steps &&
             component?.steps?.length > 0 &&

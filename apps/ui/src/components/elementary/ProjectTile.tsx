@@ -2,13 +2,14 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { Data } from "@repo/strapi"
+import type { Data } from "@repo/strapi-types"
+import type { Locale } from "next-intl"
 
 import { formatStrapiMediaUrl } from "@/lib/strapi-helpers"
 
 interface ProjectTileProps {
-  project: Data.Project
-  locale: string
+  project: Data.ContentType<"api::project.project">
+  locale: Locale
 }
 
 export function ProjectTile({ project, locale }: ProjectTileProps) {
@@ -21,7 +22,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
         <div className="relative aspect-video">
           <Image
             src={formatStrapiMediaUrl(project.image.url)}
-            alt={project.title}
+            alt={project.title ?? ""}
             fill
             className="object-cover"
           />
@@ -55,7 +56,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
               {project.links.map((link, index) => (
                 <a
                   key={index}
-                  href={link.url}
+                  href={link.url ?? "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}

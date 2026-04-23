@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Data } from "@repo/strapi-types"
-
-import { AppLocale } from "@/types/general"
+import type { Data } from "@repo/strapi-types"
+import type { Locale } from "next-intl"
 
 import AppLink from "@/components/elementary/AppLink"
 import LocaleSwitcher from "@/components/elementary/LocaleSwitcher"
@@ -16,7 +15,7 @@ import StrapiSocialIcon from "@/components/page-builder/components/utilities/Str
 interface StrapiMobileNavbarProps {
   navbar: Data.ContentType<"api::navbar.navbar">
   links: NonNullable<Data.ContentType<"api::navbar.navbar">["links"]>
-  locale: AppLocale
+  locale: Locale
 }
 
 export function StrapiMobileNavbar({
