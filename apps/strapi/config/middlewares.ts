@@ -48,7 +48,18 @@ export default [
       },
     },
   },
-  "strapi::cors",
+  {
+    name: "strapi::cors",
+    config: {
+      origin: (() => {
+        const client = process.env.CLIENT_URL?.trim()
+        if (client) {
+          return [client]
+        }
+        return ["http://localhost:3000", "http://127.0.0.1:3000"]
+      })(),
+    },
+  },
   "strapi::poweredBy",
   "strapi::logger",
   "strapi::query",
