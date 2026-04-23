@@ -82,16 +82,13 @@ ARG APP=strapi
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
 
-# Non-root user with a real $HOME (pnpm/Node need a writable home). Create user before pnpm so we can chown /pnpm.
-# Alpine: -h sets home, -D disables password, -S = system user.
+# Non-root user with a real $HOME. Alpine: -h home, -D no password, -S system.
 RUN addgroup -S -g 1001 strapi 2>/dev/null || addgroup -g 1001 -S strapi; \
   adduser -S -D -G strapi -u 1001 -h /home/strapi -s /bin/sh strapi
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN mkdir -p /pnpm \
-  && corepack enable && corepack prepare pnpm@10.28.1 --activate \
-  && chown -R strapi:strapi /pnpm
+# Real pnpm on disk (not corepack at container start). Runtime was doing "Corepack is about to download
+# pnpm" every boot → flakiness, 502, connection reset if download fails or is slow.
+RUN npm install -g pnpm@10.28.1
 
 WORKDIR /app
 COPY --from=builder --chown=strapi:strapi /app /app
