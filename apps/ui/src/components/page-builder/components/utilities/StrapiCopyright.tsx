@@ -4,7 +4,7 @@ export interface StrapiCopyrightProps {
   readonly text: string
   readonly includeYear?: boolean
   readonly className?: string
-  readonly tag?: keyof JSX.IntrinsicElements
+  readonly tag?: keyof React.JSX.IntrinsicElements
 }
 
 export function StrapiCopyright({
