@@ -15,8 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const localeTranslation = {
+const localeTranslation: Record<Locale, string> = {
   cs: "Czech",
+  de: "German",
   en: "English",
 }
 
