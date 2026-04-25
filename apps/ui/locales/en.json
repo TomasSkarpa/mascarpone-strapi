@@ -89,9 +89,9 @@
     },
 
     "notFound": {
-      "title": "Cake not found (and the page too)",
-      "description": "Looks like this page face-planted harder than a mascarpone cake challenge.",
-      "solution": "The URL may be wrong, or the cake escaped. Head back home before the frosting hits the floor.",
+      "title": "The cake was a lie. So was this URL.",
+      "description": "The enrichment center apologizes. This page was also never on the server.",
+      "solution": "Crawl back home. Mascarpone is real, at least until the next test chamber. (Yours, not the cake's.)",
       "gifAlt": "Cake fail GIF",
       "redirect": "Go to home page"
     },

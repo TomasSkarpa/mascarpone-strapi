@@ -102,9 +102,7 @@ export default async function RootLayout({
                 <StrapiNavbar locale={locale} />
               </ErrorBoundary>
 
-              <div className="flex-1">
-                <div>{children}</div>
-              </div>
+              <div className="flex min-h-0 flex-1 flex-col">{children}</div>
 
               <TailwindIndicator />
 

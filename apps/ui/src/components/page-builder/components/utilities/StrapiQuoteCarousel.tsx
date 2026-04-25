@@ -77,7 +77,7 @@ export function StrapiQuoteCarousel({
           <div
             className={`transition-all delay-100 duration-500 ease-in-out ${isVisible ? "translate-y-0 transform opacity-100" : "translate-y-2 transform opacity-0"}`}
           >
-            <p className="text-right font-medium">— {currentQuote.author}</p>
+            <p className="text-right font-medium">- {currentQuote.author}</p>
           </div>
         )}
       </div>

@@ -89,11 +89,11 @@
     },
 
     "notFound": {
-      "title": "Dort nenalezen (a stránka taky ne)",
-      "description": "Tahleta stránka dopadla hůř než mascarpone dortový fail na internetu.",
-      "solution": "Možná je špatně URL, nebo dort utekl. Vraťte se na úvodní stránku, než přistane krém na zemi.",
+      "title": "Dort nenalezen.\nA stránka taky ne.",
+      "description": "Někdo sem vložil špatnou adresu. Možná ty. Možná osud. Každopádně není to naše chyba.",
+      "solution": "Tato stránka neexistuje. Dort také neexistuje, ale to tě teď nezajímá.\n\nVrať se domů. Tam alespoň víš, co existuje.",
       "gifAlt": "GIF s dortovým failem",
-      "redirect": "Přejít na úvodní stránku"
+      "redirect": "Vzdát to a jít domů"
     },
 
     "forms": {

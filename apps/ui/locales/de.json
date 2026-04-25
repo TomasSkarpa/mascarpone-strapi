@@ -89,11 +89,11 @@
     },
 
     "notFound": {
-      "title": "Cake not found (and the page too)",
-      "description": "Looks like this page face-planted harder than a mascarpone cake challenge.",
-      "solution": "The URL may be wrong, or the cake escaped. Head back home before the frosting hits the floor.",
+      "title": "Kuchen nicht gefunden.\nDie Seite auch nicht.",
+      "description": "Jemand hat hier eine falsche Adresse eingegeben. Vielleicht du. Vielleicht das Schicksal. In jedem Fall ist es nicht unsere Schuld.",
+      "solution": "Diese Seite existiert nicht. Der Kuchen auch nicht, aber das ist gerade dein kleinstes Problem.\n\nGeh zurück. Dort weißt du wenigstens, was existiert.",
       "gifAlt": "Cake fail GIF",
-      "redirect": "Go to home page"
+      "redirect": "Niederlage akzeptieren"
     },
 
     "forms": {
