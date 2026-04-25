@@ -3,6 +3,7 @@ import { getEnvVar } from "@/lib/env-vars"
 const ALLOWED_STRAPI_ENDPOINTS: Record<string, string[]> = {
   GET: [
     "api/pages",
+    "api/projects",
     "api/footer",
     "api/navbar",
     "api/users/me",
