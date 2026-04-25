@@ -1,5 +1,6 @@
-import type { Data } from "@repo/strapi-types"
 import { Check } from "lucide-react"
+
+import type { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"

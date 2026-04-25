@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+
 import type { Data } from "@repo/strapi-types"
 import type { Locale } from "next-intl"
 

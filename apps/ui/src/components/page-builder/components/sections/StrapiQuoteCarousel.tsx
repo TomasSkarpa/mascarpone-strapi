@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+
 import type { Data } from "@repo/strapi-types"
 
 interface StrapiQuoteCarouselProps {

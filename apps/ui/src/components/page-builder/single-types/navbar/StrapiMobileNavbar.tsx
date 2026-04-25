@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
+
 import type { Data } from "@repo/strapi-types"
 import type { Locale } from "next-intl"
 

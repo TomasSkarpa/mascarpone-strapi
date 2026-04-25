@@ -1,6 +1,7 @@
 import React from "react"
-import type { VariantProps } from "class-variance-authority"
+
 import type { Data } from "@repo/strapi-types"
+import type { VariantProps } from "class-variance-authority"
 
 import AppLink from "@/components/elementary/AppLink"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"

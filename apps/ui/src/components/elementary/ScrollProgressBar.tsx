@@ -10,7 +10,8 @@ export function ScrollProgressBar() {
   const MIN_SCROLL_HEIGHT = 400
 
   const updateScrollProgress = useCallback(() => {
-    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+    const scrollTop =
+      document.body.scrollTop || document.documentElement.scrollTop
     const scrollHeight =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight
@@ -25,7 +26,10 @@ export function ScrollProgressBar() {
       return
     }
 
-    const progress = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100))
+    const progress = Math.min(
+      100,
+      Math.max(0, (scrollTop / scrollHeight) * 100)
+    )
     setScrollProgress(progress)
   }, [])
 

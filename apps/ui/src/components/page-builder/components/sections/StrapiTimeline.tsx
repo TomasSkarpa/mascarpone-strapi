@@ -1,5 +1,6 @@
-import type { Data } from "@repo/strapi-types"
 import { Calendar } from "lucide-react"
+
+import type { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 

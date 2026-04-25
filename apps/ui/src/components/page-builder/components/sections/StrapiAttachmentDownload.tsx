@@ -1,10 +1,11 @@
 "use client"
 
-import type { Data } from "@repo/strapi-types"
 import { Download } from "lucide-react"
 
-import { Container } from "@/components/elementary/Container"
+import type { Data } from "@repo/strapi-types"
+
 import { getClientStrapiFileUrl } from "@/lib/strapi-helpers"
+import { Container } from "@/components/elementary/Container"
 import { Button } from "@/components/ui/button"
 
 export function StrapiAttachmentDownload({
