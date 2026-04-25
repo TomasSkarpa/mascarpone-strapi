@@ -84,6 +84,33 @@ const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["fin
         "sections.heading-with-cta-button": headingWithCtaButtonPopulate,
         "sections.faq": faqPopulate,
         "sections.animated-logo-row": animatedLogoRowPopulate,
+        "sections.adaptive-gallery": {
+          populate: {
+            images: {
+              populate: { image: { populate: { media: true } }, link: true },
+            },
+          },
+        },
+        "sections.attachment-download": {
+          populate: { file: true },
+        },
+        "sections.timeline": {
+          populate: { milestones: true },
+        },
+        "sections.quote-carousel": {
+          populate: { quotes: true },
+        },
+        "sections.project-showcase": {
+          populate: {
+            projects: {
+              populate: {
+                image: true,
+                tags: true,
+                links: true,
+              },
+            },
+          },
+        },
         "forms.newsletter-form": newsletterFormPopulate,
         "forms.contact-form": contactFormPopulate,
         "utilities.ck-editor-content": true,
