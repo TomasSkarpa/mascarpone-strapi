@@ -67,7 +67,6 @@
   },
   "pnpm": {
     "overrides": {
-      "@sensinum/strapi-plugin-mcp>@modelcontextprotocol/sdk": "1.18.0",
       "@types/react": "19.2.9",
       "@types/react-dom": "19.2.3"
     }

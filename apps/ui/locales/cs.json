@@ -89,9 +89,10 @@
     },
 
     "notFound": {
-      "title": "Stránka nenalezena",
-      "description": "Stránka, kterou hledáte, nebyla nalezena.",
-      "solution": "Zkontrolujte prosím, zda jste zadali správnou adresu anebo se vraťte na úvodní stránku.",
+      "title": "Dort nenalezen (a stránka taky ne)",
+      "description": "Tahleta stránka dopadla hůř než mascarpone dortový fail na internetu.",
+      "solution": "Možná je špatně URL, nebo dort utekl. Vraťte se na úvodní stránku, než přistane krém na zemi.",
+      "gifAlt": "GIF s dortovým failem",
       "redirect": "Přejít na úvodní stránku"
     },
 
