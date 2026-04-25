@@ -20,5 +20,10 @@ export default {
       path: "/projects/:id",
       handler: "project.update",
     },
+    {
+      method: "DELETE",
+      path: "/projects/:id",
+      handler: "project.delete",
+    },
   ],
 }
