@@ -4,6 +4,7 @@ import type { Data } from "@repo/strapi-types"
 import { Download } from "lucide-react"
 
 import { Container } from "@/components/elementary/Container"
+import { getClientStrapiFileUrl } from "@/lib/strapi-helpers"
 import { Button } from "@/components/ui/button"
 
 export function StrapiAttachmentDownload({
@@ -55,9 +56,10 @@ export function StrapiAttachmentDownload({
                   size="lg"
                   className="w-full transform bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md transition-all duration-200 hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg md:w-auto"
                   onClick={async () => {
-                    const url = component.file?.url?.startsWith("http")
-                      ? component.file.url
-                      : `${process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337"}${component.file?.url}`
+                    const url = getClientStrapiFileUrl(component.file?.url)
+                    if (!url) {
+                      return
+                    }
                     const filename = component.file?.name || "download"
 
                     try {
@@ -71,9 +73,7 @@ export function StrapiAttachmentDownload({
                       link.click()
                       document.body.removeChild(link)
                       window.URL.revokeObjectURL(downloadUrl)
-                    } catch (error) {
-                      console.error("Download failed:", error)
-                      // Fallback to opening in new tab
+                    } catch {
                       window.open(url, "_blank")
                     }
                   }}

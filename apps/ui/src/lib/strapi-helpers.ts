@@ -36,6 +36,23 @@ const formatClientUrl = (imageUrl: string): string => {
   return `/api/asset${imageUrl}`
 }
 
+/**
+ * Resolves a Strapi media `url` to an address the browser can fetch, without
+ * `NEXT_PUBLIC_STRAPI_URL` or a localhost default. Relative paths (e.g. /uploads/…)
+ * go through the same `/api/asset` handler as `formatStrapiMediaUrl` on the client.
+ */
+export function getClientStrapiFileUrl(
+  fileUrl: string | undefined | null
+): string | null {
+  if (!fileUrl) {
+    return null
+  }
+  if (fileUrl.startsWith("http")) {
+    return fileUrl
+  }
+  return `/api/asset${fileUrl.startsWith("/") ? fileUrl : `/${fileUrl}`}`
+}
+
 const formatServerUrl = (imageUrl: string): string => {
   return `${getEnvVar("STRAPI_URL")}${imageUrl}`
 }

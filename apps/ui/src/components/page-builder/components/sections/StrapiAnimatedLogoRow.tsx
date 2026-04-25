@@ -31,7 +31,7 @@ export function StrapiAnimatedLogoRow({
               )}
             >
               {sliderImages.map((logo, index) => (
-                <div key={String(logo.id) + index} className="grayscale">
+                <div key={String(logo.id) + index}>
                   <StrapiBasicImage
                     component={logo}
                     forcedSizes={{ width: 200 }}
