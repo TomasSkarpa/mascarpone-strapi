@@ -6,8 +6,8 @@ import type { Data } from "@repo/strapi-types"
 
 interface StrapiQuoteCarouselProps {
   readonly component:
-    | Data.Component<"utilities.quote-carousel">
-    | Data.Component<"sections.quote-carousel">
+  | Data.Component<"utilities.quote-carousel">
+  | Data.Component<"sections.quote-carousel">
   readonly className?: string
   readonly title?: string
 }
@@ -66,7 +66,7 @@ export function StrapiQuoteCarouselSection({
         <h2 className="mb-8 text-center text-2xl font-bold">{title}</h2>
       )}
       <div
-        className="flex min-h-[120px] flex-col justify-between rounded-lg p-6"
+        className="flex min-h-[150px] flex-col justify-between rounded-lg p-6"
         style={{ backgroundColor: "var(--color-gray-100)" }}
       >
         <div
