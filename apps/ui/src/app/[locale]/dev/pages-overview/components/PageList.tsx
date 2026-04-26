@@ -1,8 +1,8 @@
 "use client"
 
+import { cn } from "@/lib/styles"
 import AppLink from "@/components/elementary/AppLink"
 import Typography from "@/components/typography"
-import { cn } from "@/lib/styles"
 
 export default function PageList({ pages }: { pages: any[] }) {
   return (
@@ -15,7 +15,7 @@ export default function PageList({ pages }: { pages: any[] }) {
             openInNewTab
             plain
             className={cn(
-              "mb-2 block text-sm font-mono",
+              "mb-2 block font-mono text-sm",
               "text-gray-800 hover:text-gray-950",
               "underline-offset-2 hover:underline",
               "dark:!text-gray-800 dark:hover:!text-gray-950"

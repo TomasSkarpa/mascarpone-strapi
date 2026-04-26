@@ -2,6 +2,7 @@ import { Check } from "lucide-react"
 
 import type { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
@@ -10,7 +11,6 @@ import {
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
 import { Typography } from "@/components/typography"
-import { cn } from "@/lib/styles"
 
 export function StrapiHero({
   component,
@@ -19,9 +19,7 @@ export function StrapiHero({
 }) {
   const bgColor = component.bgColor?.trim() || undefined
   return (
-    <section
-      style={bgColor ? { backgroundColor: bgColor } : undefined}
-    >
+    <section style={bgColor ? { backgroundColor: bgColor } : undefined}>
       <Container
         className={cn(
           "flex flex-col gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14",

@@ -1,5 +1,6 @@
 import { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
@@ -8,7 +9,6 @@ import {
   pageBuilderSectionTitleClass,
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
-import { cn } from "@/lib/styles"
 
 export const StrapiImageWithCTAButton = ({
   component,
@@ -47,7 +47,7 @@ export const StrapiImageWithCTAButton = ({
           {component.subText && (
             <p
               className={cn(
-                "mb-6 max-w-2xl text-left text-base font-normal sm:text-balance sm:text-lg",
+                "mb-6 max-w-2xl text-left text-base font-normal sm:text-lg sm:text-balance",
                 "!text-gray-800",
                 "dark:!text-gray-800"
               )}
@@ -61,7 +61,7 @@ export const StrapiImageWithCTAButton = ({
               href={ctaHref}
               openInNewTab={Boolean(component.link?.newTab)}
               variant="default"
-              className="inline-flex !min-h-12 !no-underline !text-white"
+              className="inline-flex !min-h-12 !text-white !no-underline"
             >
               {ctaLabel}
             </AppLink>

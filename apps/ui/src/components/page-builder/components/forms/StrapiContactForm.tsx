@@ -1,5 +1,6 @@
 import { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
 import { ContactForm } from "@/components/elementary/forms/ContactForm"
 import {
@@ -7,7 +8,6 @@ import {
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
 import { Typography } from "@/components/typography"
-import { cn } from "@/lib/styles"
 
 export function StrapiContactForm({
   component,
@@ -25,9 +25,7 @@ export function StrapiContactForm({
         <div className="flex min-w-0 flex-1">
           <div className="flex max-w-[480px] flex-col gap-6 sm:gap-8">
             {component.title && (
-              <h2
-                className={cn("text-balance", pageBuilderSectionTitleClass)}
-              >
+              <h2 className={cn("text-balance", pageBuilderSectionTitleClass)}>
                 {component.title}
               </h2>
             )}

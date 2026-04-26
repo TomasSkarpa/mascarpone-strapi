@@ -1,19 +1,19 @@
 import { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
 import { pageBuilderFaqTriggerClass } from "@/components/page-builder/interaction-styles"
 import {
   pageBuilderSectionIntroClass,
   pageBuilderSectionTitleClass,
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
-import { cn } from "@/lib/styles"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 export function StrapiFaq({
   component,
@@ -50,7 +50,11 @@ export function StrapiFaq({
           </div>
 
           {component.accordions && (
-            <Accordion type="single" collapsible className="space-y-3 sm:space-y-4">
+            <Accordion
+              type="single"
+              collapsible
+              className="space-y-3 sm:space-y-4"
+            >
               {component.accordions.map((x) => (
                 <AccordionItem
                   key={x.id}
@@ -77,7 +81,7 @@ export function StrapiFaq({
                     {x.question}
                   </AccordionTrigger>
                   <AccordionContent className="border-t border-gray-100 bg-white !pt-0 text-sm leading-relaxed text-gray-800 sm:text-base">
-                    <div className="px-5 pb-4 pt-3 sm:px-6 sm:pb-5 sm:pt-3.5">
+                    <div className="px-5 pt-3 pb-4 sm:px-6 sm:pt-3.5 sm:pb-5">
                       {x.answer}
                     </div>
                   </AccordionContent>

@@ -1,5 +1,6 @@
 import { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 import { NewsletterForm } from "@/components/elementary/forms/NewsletterForm"
@@ -7,7 +8,6 @@ import {
   pageBuilderSectionTitleClass,
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
-import { cn } from "@/lib/styles"
 
 export function StrapiNewsletterForm({
   component,
@@ -27,7 +27,9 @@ export function StrapiNewsletterForm({
             {component.title}
           </h2>
           {component.description && (
-            <p className="text-balance text-gray-700">{component.description}</p>
+            <p className="text-balance text-gray-700">
+              {component.description}
+            </p>
           )}
         </div>
         <div className="flex w-full max-w-[560px] flex-1 items-end self-stretch lg:items-end">

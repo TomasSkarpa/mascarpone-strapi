@@ -1,8 +1,8 @@
 import { Data } from "@repo/strapi-types"
 
-import { pageBuilderSectionTitleClass } from "@/components/page-builder/section-layout"
-import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import { cn } from "@/lib/styles"
+import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
+import { pageBuilderSectionTitleClass } from "@/components/page-builder/section-layout"
 
 export function StrapiAnimatedLogoRow({
   component,
@@ -23,7 +23,7 @@ export function StrapiAnimatedLogoRow({
         {hasHeading && (
           <h2
             className={cn(
-              "mb-4 w-full text-balance text-center sm:mb-5",
+              "mb-4 w-full text-center text-balance sm:mb-5",
               pageBuilderSectionTitleClass
             )}
           >

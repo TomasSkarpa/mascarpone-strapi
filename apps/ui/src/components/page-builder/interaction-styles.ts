@@ -18,9 +18,7 @@ export const pageBuilderImageTileButton =
   "active:scale-[0.99] "
 
 export const pageBuilderImageTileLinkBlock =
-  pageBuilderImageTileShell +
-  "transition-shadow " +
-  "active:opacity-95 "
+  pageBuilderImageTileShell + "transition-shadow " + "active:opacity-95 "
 
 export const pageBuilderCarouselNavButtonClass =
   "inline-flex min-h-11 min-w-11 select-none items-center justify-center rounded-full p-2 text-white shadow-sm " +

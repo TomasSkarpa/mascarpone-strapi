@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_sections_section_labeled_dividers",
+  "info": {
+    "displayName": "Section labeled divider",
+    "description": "A horizontal rule with a centered label (e.g. section overline) between other blocks"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -75,7 +75,8 @@
         "sections.attachment-download",
         "sections.timeline",
         "sections.quote-carousel",
-        "sections.project-showcase"
+        "sections.project-showcase",
+        "sections.section-labeled-divider"
       ],
       "pluginOptions": {
         "i18n": {

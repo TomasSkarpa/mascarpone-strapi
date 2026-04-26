@@ -32,7 +32,7 @@ export function NewsletterForm() {
 
   async function onSubmit(values: FormSchemaType) {
     // TODO: Add submit logic
-     
+
     console.log("Form submitted", values)
   }
 

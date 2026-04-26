@@ -17,7 +17,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
   return (
     <Link
       href={`/${locale}/projects/${project.documentId}`}
-      className="portfolio-card-lift flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-[box-shadow,transform] hover:shadow-xl active:scale-[0.995] active:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
+      className="portfolio-card-lift focus-visible:ring-primary-600 flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-[box-shadow,transform] hover:shadow-xl focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.995] active:shadow-md"
     >
       {project.image?.url && (
         <div className="relative aspect-video">
@@ -63,7 +63,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:brightness-110 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 active:scale-95"
+                  className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:shadow-md hover:brightness-110 focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 focus-visible:outline-none active:scale-95"
                 >
                   {link.type}
                 </a>

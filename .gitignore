@@ -48,3 +48,6 @@ next-env.d.ts
 
 # local helper scripts
 apps/strapi/scripts/*.mjs
+
+# repo-root scripts and ad-hoc content
+scripts/

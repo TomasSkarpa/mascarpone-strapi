@@ -15,7 +15,9 @@ export interface StrapiLinkProps {
   readonly className?: string
   readonly hideWhenMissing?: boolean
   /** When set, overrides `decorations.variant` (e.g. force a solid CTA on a light background). */
-  readonly appLinkVariant?: NonNullable<VariantProps<typeof buttonVariants>["variant"]>
+  readonly appLinkVariant?: NonNullable<
+    VariantProps<typeof buttonVariants>["variant"]
+  >
   /** When set, overrides `decorations.size` (e.g. `lg` for a section CTA). */
   readonly appLinkSize?: ButtonSize
   /**

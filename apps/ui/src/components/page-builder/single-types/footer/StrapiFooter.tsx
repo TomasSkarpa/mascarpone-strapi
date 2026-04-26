@@ -55,7 +55,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                         <StrapiLink
                           key={`${link.id}-${i}`}
                           component={link}
-                          className="block text-sm !text-gray-900 no-underline transition-colors duration-200 hover:!text-gray-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/40 focus-visible:ring-offset-2 dark:!text-gray-900 dark:hover:!text-gray-800"
+                          className="focus-visible:ring-primary-600/40 block text-sm !text-gray-900 no-underline transition-colors duration-200 hover:!text-gray-800 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none dark:!text-gray-900 dark:hover:!text-gray-800"
                         />
                       ))}
                     </nav>
@@ -83,7 +83,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                   <StrapiLink
                     key={`${link.id}-${i}`}
                     component={link}
-                    className="w-full !items-start !justify-start py-2 text-left text-sm !text-gray-900 no-underline transition-colors duration-200 hover:text-gray-800 hover:underline focus-visible:ring-2 focus-visible:ring-primary-600/40 focus-visible:ring-offset-2 md:w-auto md:py-0 dark:!text-gray-900 dark:hover:text-gray-800"
+                    className="focus-visible:ring-primary-600/40 w-full !items-start !justify-start py-2 text-left text-sm !text-gray-900 no-underline transition-colors duration-200 hover:text-gray-800 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 md:w-auto md:py-0 dark:!text-gray-900 dark:hover:text-gray-800"
                   />
                 ))}
               </nav>

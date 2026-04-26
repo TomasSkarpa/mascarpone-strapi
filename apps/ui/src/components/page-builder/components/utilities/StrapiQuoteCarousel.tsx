@@ -4,8 +4,8 @@ import { useEffect, useState } from "react"
 
 import type { Data } from "@repo/strapi-types"
 
-import { pageBuilderBlockHeadingClass } from "@/components/page-builder/section-layout"
 import { cn } from "@/lib/styles"
+import { pageBuilderBlockHeadingClass } from "@/components/page-builder/section-layout"
 
 type QuoteCarouselVariant = "section" | "compact"
 
@@ -81,7 +81,12 @@ export function StrapiQuoteCarousel({
   return (
     <div className={cn("w-full", className)}>
       {title && (
-        <h2 className={cn("mb-6 text-center sm:mb-8", pageBuilderBlockHeadingClass)}>
+        <h2
+          className={cn(
+            "mb-6 text-center sm:mb-8",
+            pageBuilderBlockHeadingClass
+          )}
+        >
           {title}
         </h2>
       )}

@@ -23,9 +23,7 @@ export function StrapiTimeline({
               {component.title}
             </h2>
             {component.subTitle && (
-              <p
-                className={`text-balance ${pageBuilderSectionIntroClass}`}
-              >
+              <p className={`text-balance ${pageBuilderSectionIntroClass}`}>
                 {component.subTitle}
               </p>
             )}

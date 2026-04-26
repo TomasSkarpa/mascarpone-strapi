@@ -1,14 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+} from "lucide-react"
 
 import type { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
-import { ImageGallery } from "@/components/ui/ImageGallery"
 import {
   pageBuilderCarouselDotClass,
   pageBuilderCarouselNavButtonClass,
@@ -21,7 +26,7 @@ import {
   pageBuilderSectionTitleClass,
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
-import { cn } from "@/lib/styles"
+import { ImageGallery } from "@/components/ui/ImageGallery"
 
 type GalleryImageItem = NonNullable<
   Data.Component<"sections.adaptive-gallery">["images"]
@@ -204,7 +209,7 @@ export function StrapiAdaptiveGallery({
         plain
         className={pageBuilderImageTileLinkBlock}
       >
-        <span className="relative block h-full w-full min-h-0 min-w-0 overflow-hidden rounded-lg">
+        <span className="relative block h-full min-h-0 w-full min-w-0 overflow-hidden rounded-lg">
           <StrapiBasicImage
             component={x.image}
             className={imageClass}
@@ -271,9 +276,7 @@ export function StrapiAdaptiveGallery({
                 </h2>
               )}
               {component.subTitle && (
-                <p
-                  className={`text-balance ${pageBuilderSectionIntroClass}`}
-                >
+                <p className={`text-balance ${pageBuilderSectionIntroClass}`}>
                   {component.subTitle}
                 </p>
               )}
@@ -340,7 +343,10 @@ export function StrapiAdaptiveGallery({
                     )}
                     aria-label="Next slide"
                   >
-                    <ChevronRight size={20} className="shrink-0 sm:h-6 sm:w-6" />
+                    <ChevronRight
+                      size={20}
+                      className="shrink-0 sm:h-6 sm:w-6"
+                    />
                   </button>
 
                   <div className="mt-4 flex flex-wrap justify-center gap-1">
@@ -452,7 +458,10 @@ export function StrapiAdaptiveGallery({
                     )}
                     aria-label="Next slide"
                   >
-                    <ChevronRight size={20} className="shrink-0 sm:h-6 sm:w-6" />
+                    <ChevronRight
+                      size={20}
+                      className="shrink-0 sm:h-6 sm:w-6"
+                    />
                   </button>
                 </>
               )}

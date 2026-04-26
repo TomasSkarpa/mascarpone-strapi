@@ -1,13 +1,13 @@
 import React from "react"
 import { Data } from "@repo/strapi-types"
 
+import { cn } from "@/lib/styles"
 import { Container } from "@/components/elementary/Container"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import {
   pageBuilderSectionTitleClass,
   pageBuilderSectionY,
 } from "@/components/page-builder/section-layout"
-import { cn } from "@/lib/styles"
 
 export const StrapiHeadingWithCTAButton = ({
   component,
@@ -18,9 +18,7 @@ export const StrapiHeadingWithCTAButton = ({
     <section className="relative overflow-hidden from-slate-50 via-white to-red-50/30">
       <div className="bg-grid-slate-100 dark:bg-grid-slate-700/25 absolute inset-0 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))]" />
 
-      <Container
-        className={cn("relative max-w-3xl", pageBuilderSectionY)}
-      >
+      <Container className={cn("relative max-w-3xl", pageBuilderSectionY)}>
         <div className="mx-auto w-full text-center">
           <div className="space-y-3">
             <h2 className={cn("text-balance", pageBuilderSectionTitleClass)}>

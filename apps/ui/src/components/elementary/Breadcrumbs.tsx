@@ -39,8 +39,8 @@ export function Breadcrumbs({ breadcrumbs, className }: Props) {
                   "h-auto min-h-0 justify-start rounded-lg px-2 py-1",
                   "text-sm no-underline transition-colors hover:no-underline",
                   "text-gray-900 hover:bg-slate-100/90 hover:text-gray-950",
-                  "focus-visible:text-gray-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/30 focus-visible:ring-offset-2",
-                  "dark:!text-gray-900 dark:hover:!text-gray-950 dark:hover:!bg-slate-100/90"
+                  "focus-visible:ring-primary-600/30 focus-visible:text-gray-950 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none",
+                  "dark:!text-gray-900 dark:hover:!bg-slate-100/90 dark:hover:!text-gray-950"
                 )}
               >
                 {breadcrumb.title}
