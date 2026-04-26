@@ -5,7 +5,12 @@ import type { Data } from "@repo/strapi-types"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
+import {
+  pageBuilderPageTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
 import { Typography } from "@/components/typography"
+import { cn } from "@/lib/styles"
 
 export function StrapiHero({
   component,
@@ -14,24 +19,30 @@ export function StrapiHero({
 }) {
   return (
     <section style={{ backgroundColor: component.bgColor ?? "transparent" }}>
-      <Container className="flex flex-col gap-6 px-4 py-8 md:flex-row lg:py-12 xl:gap-0">
+      <Container
+        className={cn(
+          "flex flex-col gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14",
+          pageBuilderSectionY
+        )}
+      >
         <div
           className={`flex w-full flex-col justify-center ${
             component.image?.media ? "md:w-1/2" : "md:w-full"
           }`}
         >
-          <Typography
-            tag="h1"
-            variant="heading1"
-            className="max-w-2xl text-left text-2xl font-bold text-gray-900 md:text-center md:text-4xl lg:text-5xl"
+          <h1
+            className={cn(
+              "mb-4 max-w-2xl text-left sm:mb-5 md:text-center",
+              pageBuilderPageTitleClass
+            )}
           >
             {component.title}
-          </Typography>
+          </h1>
           {component.subTitle && (
             <Typography
               tag="p"
               variant="large"
-              className="mb-6 max-w-2xl text-left text-base text-gray-600 md:text-center md:text-lg"
+              className="mb-6 max-w-2xl text-left text-base text-gray-800 md:text-center md:text-lg"
             >
               {component.subTitle}
             </Typography>
@@ -51,7 +62,8 @@ export function StrapiHero({
                 <StrapiLink
                   key={i}
                   component={link}
-                  className="inline-flex w-full items-center justify-center rounded-lg bg-neutral-900 px-5 py-3 text-base font-medium text-white transition-colors hover:bg-neutral-800 focus:ring-2 focus:ring-neutral-400 focus:outline-none lg:w-fit"
+                  appLinkVariant="default"
+                  className="inline-flex !min-h-12 !no-underline !text-white"
                 />
               ))}
             </div>

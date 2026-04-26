@@ -14,6 +14,8 @@ export interface AppLinkProps
   readonly openInNewTab?: boolean
   readonly startAdornment?: React.ReactNode
   readonly endAdornment?: React.ReactNode
+  /** If true, skip button sizing (e.g. `h-9`) and flex; only `className` + `group` apply. Use for full-tile / image links. */
+  readonly plain?: boolean
 }
 
 export const AppLink = ({
@@ -25,13 +27,16 @@ export const AppLink = ({
   openInNewTab = false,
   variant = "link",
   size = "default",
+  plain = false,
   ...props
 }: AppLinkProps) => {
-  const combinedClassName = cn(
-    "group flex flex-row items-center gap-2",
-    buttonVariants({ variant, size }),
-    className
-  )
+  const combinedClassName = plain
+    ? cn("group", className)
+    : cn(
+        "group flex flex-row items-center gap-2",
+        buttonVariants({ variant, size }),
+        className
+      )
 
   const formattedHref = formatHref(href)
 

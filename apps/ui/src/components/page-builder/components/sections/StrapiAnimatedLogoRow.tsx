@@ -1,8 +1,8 @@
 import { Data } from "@repo/strapi-types"
 
-import { cn } from "@/lib/styles"
+import { pageBuilderSectionTitleClass } from "@/components/page-builder/section-layout"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
-import { Typography } from "@/components/typography"
+import { cn } from "@/lib/styles"
 
 export function StrapiAnimatedLogoRow({
   component,
@@ -21,9 +21,14 @@ export function StrapiAnimatedLogoRow({
     <section className="w-full py-5">
       <div className="flex flex-col items-center gap-[30px]">
         {hasHeading && (
-          <Typography tag="h3" variant="heading4" fontWeight="normal">
+          <h2
+            className={cn(
+              "mb-4 w-full text-balance text-center sm:mb-5",
+              pageBuilderSectionTitleClass
+            )}
+          >
             {component.text}
-          </Typography>
+          </h2>
         )}
 
         {logos.length > 0 && (

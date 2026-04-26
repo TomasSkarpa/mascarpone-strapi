@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowUpRight, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react"
 
 import type { Data } from "@repo/strapi-types"
 
@@ -9,6 +9,23 @@ import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import { ImageGallery } from "@/components/ui/ImageGallery"
+import {
+  pageBuilderCarouselDotClass,
+  pageBuilderCarouselNavButtonClass,
+  pageBuilderImageTileButton,
+  pageBuilderImageTileLinkBlock,
+  pageBuilderLoadMoreButtonClass,
+} from "@/components/page-builder/interaction-styles"
+import {
+  pageBuilderSectionIntroClass,
+  pageBuilderSectionTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
+import { cn } from "@/lib/styles"
+
+type GalleryImageItem = NonNullable<
+  Data.Component<"sections.adaptive-gallery">["images"]
+>[number]
 
 export function StrapiAdaptiveGallery({
   component,
@@ -57,7 +74,10 @@ export function StrapiAdaptiveGallery({
     return `relative overflow-hidden ${aspectRatio} flex items-center justify-center`.trim()
   }
 
-  const getImageProps = () => ({
+  const getImageProps = (): {
+    className: string
+    fill: false
+  } => ({
     className: isAutoAspect
       ? "w-full rounded-lg object-contain"
       : "w-full h-full rounded-lg object-cover object-center",
@@ -154,40 +174,95 @@ export function StrapiAdaptiveGallery({
     setDragOffset(0)
   }
 
-  const renderImageItem = (x: any, i: number, className: string = "") =>
-    x.link ? (
-      <StrapiLink component={x.link} className="block">
-        <StrapiBasicImage
-          component={x.image}
-          className={className || "w-full rounded-lg object-contain"}
-        />
+  const renderImageItem = (
+    x: GalleryImageItem,
+    i: number,
+    imageFieldProps: ReturnType<typeof getImageProps> = {
+      className: "w-full rounded-lg object-contain",
+      fill: false,
+    }
+  ) => {
+    const { className: baseClass, ...rest } = imageFieldProps
+    const imageClass = cn(
+      baseClass,
+      "transition-opacity group-hover:opacity-90"
+    )
+    return x.link ? (
+      <StrapiLink
+        component={x.link}
+        plain
+        className={pageBuilderImageTileLinkBlock}
+      >
+        <span className="relative block h-full w-full min-h-0 min-w-0 overflow-hidden rounded-lg">
+          <StrapiBasicImage
+            component={x.image}
+            className={imageClass}
+            {...rest}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 z-[1] flex items-start justify-end p-1.5 sm:p-2"
+            aria-hidden
+          >
+            <span
+              className={cn(
+                "inline-flex h-7 w-7 items-center justify-center rounded-md",
+                "border border-white/30 bg-white/90 text-gray-800 shadow-md backdrop-blur-sm",
+                "sm:h-8 sm:w-8",
+                "transition-transform duration-200 group-hover:scale-110",
+                "dark:border-gray-600/50 dark:bg-gray-900/90 dark:text-gray-100"
+              )}
+            >
+              {(x.link as { type?: "page" | "external" }).type ===
+              "external" ? (
+                <ExternalLink
+                  className="size-3.5 sm:size-4"
+                  strokeWidth={2.25}
+                  aria-hidden
+                />
+              ) : (
+                <ArrowUpRight
+                  className="size-3.5 sm:size-4"
+                  strokeWidth={2.25}
+                  aria-hidden
+                />
+              )}
+            </span>
+          </div>
+        </span>
       </StrapiLink>
     ) : (
       <button
         type="button"
-        className="w-full cursor-pointer rounded-lg outline-none focus:ring-2 focus:ring-red-500/50"
+        className={pageBuilderImageTileButton}
         onClick={() => !hasDragged && setSelectedImage(i)}
+        aria-label={`Open image ${i + 1} in lightbox`}
       >
         <StrapiBasicImage
           component={x.image}
-          className={`${className || "w-full rounded-lg object-contain"} transition-opacity hover:opacity-80`}
+          className={imageClass}
+          {...rest}
         />
       </button>
     )
+  }
 
   return (
     <section>
-      <Container className="py-8">
-        <div className="flex flex-col items-center">
+      <Container className={pageBuilderSectionY}>
+        <div className="flex w-full max-w-6xl flex-col items-center">
           {(component.title || component.subTitle) && (
-            <div className="mb-6 text-center md:mb-8">
+            <div className="mb-8 w-full text-center sm:mb-10">
               {component.title && (
-                <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+                <h2
+                  className={`mb-4 text-balance sm:mb-5 ${pageBuilderSectionTitleClass}`}
+                >
                   {component.title}
                 </h2>
               )}
               {component.subTitle && (
-                <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
+                <p
+                  className={`text-balance ${pageBuilderSectionIntroClass}`}
+                >
                   {component.subTitle}
                 </p>
               )}
@@ -224,7 +299,7 @@ export function StrapiAdaptiveGallery({
                       key={String(x.id) + i}
                       className="w-full flex-shrink-0 px-2"
                     >
-                      {renderImageItem(x, i)}
+                      {renderImageItem(x, i, getImageProps())}
                     </div>
                   ))}
                 </div>
@@ -236,34 +311,48 @@ export function StrapiAdaptiveGallery({
                     type="button"
                     onClick={prevSlide}
                     disabled={currentSlide === 0}
-                    className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-2 text-white transition-all duration-200 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:p-3"
+                    className={cn(
+                      "absolute top-1/2 left-0 -translate-y-1/2",
+                      pageBuilderCarouselNavButtonClass
+                    )}
                     aria-label="Previous slide"
                   >
-                    <ChevronLeft size={20} className="sm:h-6 sm:w-6" />
+                    <ChevronLeft size={20} className="shrink-0 sm:h-6 sm:w-6" />
                   </button>
                   <button
                     type="button"
                     onClick={nextSlide}
                     disabled={currentSlide === displayedImages.length - 1}
-                    className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-2 text-white transition-all duration-200 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:p-3"
+                    className={cn(
+                      "absolute top-1/2 right-0 -translate-y-1/2",
+                      pageBuilderCarouselNavButtonClass
+                    )}
                     aria-label="Next slide"
                   >
-                    <ChevronRight size={20} className="sm:h-6 sm:w-6" />
+                    <ChevronRight size={20} className="shrink-0 sm:h-6 sm:w-6" />
                   </button>
 
-                  <div className="mt-4 flex justify-center gap-2">
+                  <div className="mt-4 flex flex-wrap justify-center gap-1">
                     {displayedImages.map((_, index) => (
                       <button
                         type="button"
                         key={index}
                         onClick={() => setCurrentSlide(index)}
-                        className={
-                          index === currentSlide
-                            ? "h-2 w-2 rounded-full bg-red-500 transition-colors"
-                            : "h-2 w-2 rounded-full bg-gray-300 transition-colors"
-                        }
+                        className={pageBuilderCarouselDotClass}
                         aria-label={`Go to slide ${index + 1}`}
-                      />
+                        aria-current={
+                          index === currentSlide ? "true" : undefined
+                        }
+                      >
+                        <span
+                          className={cn(
+                            "h-2 w-2 rounded-full transition-colors",
+                            index === currentSlide
+                              ? "bg-red-500"
+                              : "bg-gray-400 dark:bg-gray-500"
+                          )}
+                        />
+                      </button>
                     ))}
                   </div>
                 </>
@@ -277,7 +366,7 @@ export function StrapiAdaptiveGallery({
               <div className={getMobileGridClass()}>
                 {displayedImages.map((x, i) => (
                   <div key={String(x.id) + i} className={getContainerClass()}>
-                    {renderImageItem(x, i, getImageProps().className)}
+                    {renderImageItem(x, i, getImageProps())}
                   </div>
                 ))}
               </div>
@@ -319,7 +408,7 @@ export function StrapiAdaptiveGallery({
                       style={{ width: `${100 / desktopCols}%` }}
                     >
                       <div className={getContainerClass()}>
-                        {renderImageItem(x, i, getImageProps().className)}
+                        {renderImageItem(x, i, getImageProps())}
                       </div>
                     </div>
                   ))}
@@ -332,10 +421,13 @@ export function StrapiAdaptiveGallery({
                     type="button"
                     onClick={prevSlide}
                     disabled={currentSlide === 0}
-                    className="absolute top-1/2 left-0 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-2 text-white transition-all duration-200 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:p-3"
+                    className={cn(
+                      "absolute top-1/2 left-0 -translate-y-1/2",
+                      pageBuilderCarouselNavButtonClass
+                    )}
                     aria-label="Previous slide"
                   >
-                    <ChevronLeft size={20} className="sm:h-6 sm:w-6" />
+                    <ChevronLeft size={20} className="shrink-0 sm:h-6 sm:w-6" />
                   </button>
                   <button
                     type="button"
@@ -343,10 +435,13 @@ export function StrapiAdaptiveGallery({
                     disabled={
                       currentSlide >= displayedImages.length - desktopCols
                     }
-                    className="absolute top-1/2 right-0 -translate-y-1/2 cursor-pointer rounded-full bg-black/70 p-2 text-white transition-all duration-200 hover:scale-110 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:scale-100 sm:p-3"
+                    className={cn(
+                      "absolute top-1/2 right-0 -translate-y-1/2",
+                      pageBuilderCarouselNavButtonClass
+                    )}
                     aria-label="Next slide"
                   >
-                    <ChevronRight size={20} className="sm:h-6 sm:w-6" />
+                    <ChevronRight size={20} className="shrink-0 sm:h-6 sm:w-6" />
                   </button>
                 </>
               )}
@@ -359,26 +454,7 @@ export function StrapiAdaptiveGallery({
               <div className={getDesktopGridClass()}>
                 {displayedImages.map((x, i) => (
                   <div key={String(x.id) + i} className={getContainerClass()}>
-                    {x.link ? (
-                      <StrapiLink component={x.link} className="block">
-                        <StrapiBasicImage
-                          component={x.image}
-                          {...getImageProps()}
-                        />
-                      </StrapiLink>
-                    ) : (
-                      <button
-                        type="button"
-                        className="w-full cursor-pointer rounded-lg outline-none focus:ring-2 focus:ring-red-500/50"
-                        onClick={() => !hasDragged && setSelectedImage(i)}
-                      >
-                        <StrapiBasicImage
-                          component={x.image}
-                          {...getImageProps()}
-                          className={`${getImageProps().className} transition-opacity hover:opacity-80`}
-                        />
-                      </button>
-                    )}
+                    {renderImageItem(x, i, getImageProps())}
                   </div>
                 ))}
               </div>
@@ -390,7 +466,7 @@ export function StrapiAdaptiveGallery({
             <button
               type="button"
               onClick={() => setShowAll(true)}
-              className="mt-6 rounded-lg bg-red-500 px-6 py-2 text-white transition-colors hover:bg-red-600"
+              className={cn("mt-6", pageBuilderLoadMoreButtonClass)}
             >
               Load More ({allImages.length - IMAGES_LIMIT} more)
             </button>

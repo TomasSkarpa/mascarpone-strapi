@@ -6,6 +6,10 @@ import type { Data } from "@repo/strapi-types"
 
 import { getClientStrapiFileUrl } from "@/lib/strapi-helpers"
 import { Container } from "@/components/elementary/Container"
+import {
+  pageBuilderSectionTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
 import { Button } from "@/components/ui/button"
 
 export function StrapiAttachmentDownload({
@@ -15,10 +19,10 @@ export function StrapiAttachmentDownload({
 }) {
   return (
     <section>
-      <Container className="py-8 lg:py-12">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-6 text-left md:mb-8 md:text-center">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+      <Container className={pageBuilderSectionY}>
+        <div className="mx-auto w-full max-w-4xl">
+          <div className="mb-6 text-left text-balance md:mb-8 md:text-center">
+            <h2 className={`mb-4 ${pageBuilderSectionTitleClass}`}>
               {component.title}
             </h2>
           </div>
@@ -39,7 +43,7 @@ export function StrapiAttachmentDownload({
                   <p className="text-base leading-relaxed font-medium text-gray-700 md:text-lg">
                     {component.description}
                   </p>
-                  <div className="flex items-center justify-center gap-2 text-sm text-gray-500 md:justify-start">
+                  <div className="flex items-center justify-center gap-2 text-sm text-gray-700 md:justify-start">
                     <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
                     <span>{component.statusText || "Ready to download"}</span>
                     {component.file?.name && (
@@ -55,7 +59,7 @@ export function StrapiAttachmentDownload({
 
                 <Button
                   size="lg"
-                  className="w-full transform bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md transition-all duration-200 hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg md:w-auto"
+                  className="w-full md:w-auto"
                   onClick={async () => {
                     const url = getClientStrapiFileUrl(component.file?.url)
                     if (!url) {

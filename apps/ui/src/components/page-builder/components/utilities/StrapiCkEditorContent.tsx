@@ -2,17 +2,23 @@ import React from "react"
 import { Data } from "@repo/strapi-types"
 
 import CKEditorRenderer from "@/components/elementary/ck-editor"
+import { Container } from "@/components/elementary/Container"
+import { pageBuilderSectionY } from "@/components/page-builder/section-layout"
 
 export const StrapiCkEditorContent = ({
   component,
 }: {
-  readonly component: Data.Component<"utilities.ck-editor-content">
+  readonly component:
+    | Data.Component<"utilities.ck-editor-content">
+    | Data.Component<"utilities.ck-editor-text">
 }) => {
   return (
-    <CKEditorRenderer
-      htmlContent={component.content}
-      className="mx-auto w-full max-w-[1296px] px-4 py-8 lg:py-12"
-    />
+    <Container className={pageBuilderSectionY}>
+      <CKEditorRenderer
+        htmlContent={component.content}
+        className="w-full text-balance"
+      />
+    </Container>
   )
 }
 

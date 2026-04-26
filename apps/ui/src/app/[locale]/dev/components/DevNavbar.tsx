@@ -1,6 +1,7 @@
 "use client"
 
 import { usePathname } from "@/lib/navigation"
+import { cn } from "@/lib/styles"
 import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 
@@ -23,7 +24,16 @@ export default function DevNavbar() {
           {links
             .filter((link) => link.href !== pathname)
             .map((link) => (
-              <AppLink key={link.href} href={link.href}>
+              <AppLink
+                key={link.href}
+                href={link.href}
+                plain
+                className={cn(
+                  "inline-flex rounded-md px-3 py-1.5 text-sm font-medium",
+                  "text-gray-900 no-underline hover:bg-black/5 hover:text-gray-950",
+                  "dark:!text-gray-900 dark:hover:!text-gray-950"
+                )}
+              >
                 {link.label}
               </AppLink>
             ))}

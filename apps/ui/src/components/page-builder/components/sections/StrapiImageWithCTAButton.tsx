@@ -1,17 +1,30 @@
 import { Data } from "@repo/strapi-types"
 
+import AppLink from "@/components/elementary/AppLink"
 import { Container } from "@/components/elementary/Container"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
-import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
+import { getStrapiLinkHref } from "@/components/page-builder/components/utilities/StrapiLink"
+import {
+  pageBuilderSectionTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
+import { cn } from "@/lib/styles"
 
 export const StrapiImageWithCTAButton = ({
   component,
 }: {
   readonly component: Data.Component<"sections.image-with-cta-button">
 }) => {
+  const ctaHref = getStrapiLinkHref(component.link)
+  const ctaLabel = component.link?.label
   return (
-    <section>
-      <Container className="items-center gap-4 md:grid md:grid-cols-2 xl:gap-8">
+    <section className="text-gray-950 dark:text-gray-950">
+      <Container
+        className={cn(
+          "items-center gap-4 md:grid md:grid-cols-2 md:gap-8 xl:gap-8",
+          pageBuilderSectionY
+        )}
+      >
         <div className="flex justify-center">
           <StrapiBasicImage
             component={component.image}
@@ -21,20 +34,38 @@ export const StrapiImageWithCTAButton = ({
           />
         </div>
 
-        <div className="mt-4 md:mt-0">
-          <h2 className="mb-4 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+        <div className="md:mt-0">
+          <h2
+            className={cn(
+              "mb-4 text-left sm:text-balance",
+              pageBuilderSectionTitleClass,
+              "!text-gray-950 dark:!text-gray-950"
+            )}
+          >
             {component.title}
           </h2>
           {component.subText && (
-            <p className="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">
+            <p
+              className={cn(
+                "mb-6 max-w-2xl text-left text-base font-normal sm:text-balance sm:text-lg",
+                "!text-gray-800",
+                "dark:!text-gray-800"
+              )}
+            >
               {component.subText}
             </p>
           )}
 
-          <StrapiLink
-            component={component.link}
-            className="focus:ring-primary-300 bg-primary inline-flex items-center justify-center rounded-lg px-5 py-3 text-center text-base font-medium text-white focus:ring-4"
-          />
+          {ctaHref && ctaLabel ? (
+            <AppLink
+              href={ctaHref}
+              openInNewTab={Boolean(component.link?.newTab)}
+              variant="default"
+              className="inline-flex !min-h-12 !no-underline !text-white"
+            >
+              {ctaLabel}
+            </AppLink>
+          ) : null}
         </div>
       </Container>
     </section>

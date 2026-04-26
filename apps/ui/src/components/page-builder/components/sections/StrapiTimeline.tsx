@@ -3,6 +3,11 @@ import { Calendar } from "lucide-react"
 import type { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
+import {
+  pageBuilderSectionIntroClass,
+  pageBuilderSectionTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
 
 export function StrapiTimeline({
   component,
@@ -11,14 +16,16 @@ export function StrapiTimeline({
 }) {
   return (
     <section>
-      <Container className="py-8 lg:py-12">
-        <div className="mx-auto max-w-4xl">
-          <div className="mb-6 text-left md:mb-8 md:text-center">
-            <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-4xl lg:text-5xl">
+      <Container className={pageBuilderSectionY}>
+        <div className="mx-auto w-full max-w-4xl">
+          <div className="mb-8 text-left md:mb-10 md:text-center">
+            <h2 className={`mb-4 text-balance ${pageBuilderSectionTitleClass}`}>
               {component.title}
             </h2>
             {component.subTitle && (
-              <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
+              <p
+                className={`text-balance ${pageBuilderSectionIntroClass}`}
+              >
                 {component.subTitle}
               </p>
             )}
@@ -44,23 +51,23 @@ export function StrapiTimeline({
                     >
                       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
                         <div className="mb-2 flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-gray-500" />
-                          <span className="text-sm text-gray-500">
+                          <Calendar className="h-4 w-4 shrink-0 text-gray-600" />
+                          <span className="text-sm text-gray-700">
                             {milestone.date}
                           </span>
                           {milestone.company && (
                             <>
-                              <span className="text-gray-300">•</span>
-                              <span className="text-sm text-gray-500">
+                              <span className="text-gray-400">•</span>
+                              <span className="text-sm text-gray-700">
                                 {milestone.company}
                               </span>
                             </>
                           )}
                         </div>
-                        <h3 className="mb-2 text-lg font-semibold text-gray-900">
+                        <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-900">
                           {milestone.title}
                         </h3>
-                        <p className="leading-relaxed text-gray-600">
+                        <p className="leading-relaxed text-gray-800">
                           {milestone.description}
                         </p>
                       </div>

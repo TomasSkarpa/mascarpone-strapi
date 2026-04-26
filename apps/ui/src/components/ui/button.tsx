@@ -8,21 +8,41 @@ import { cn } from "@/lib/styles"
 import { Spinner } from "@/components/elementary/Spinner"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 cursor-pointer [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0",
+  "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-medium transition-all duration-200 " +
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background " +
+    "disabled:pointer-events-none disabled:opacity-50 " +
+    "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
   {
-    // Don't forget to keep in sync with Link component (LinkDecorations) in Strapi
+    // Don't forget to keep in sync with Link component (AppLink) and Strapi link decorations
     variants: {
       variant: {
         default:
-          "w-full transform bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg md:w-auto",
+          "w-full transform bg-gradient-to-r from-red-600 to-red-700 text-white shadow-md " +
+          "hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg " +
+          "active:scale-[0.98] active:from-red-800 active:to-red-900 " +
+          "md:w-auto",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-destructive text-white " +
+          "hover:bg-destructive/90 active:scale-[0.99] active:bg-destructive/85 " +
+          "focus-visible:ring-destructive/40 dark:focus-visible:ring-destructive/50 dark:bg-destructive/60",
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
+          "border bg-background shadow-xs " +
+          "hover:bg-accent hover:text-accent-foreground active:scale-[0.99] active:bg-accent/80 " +
+          "dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-gray-900 underline-offset-4 hover:underline hover:text-gray-700",
+          "bg-secondary text-secondary-foreground shadow-xs " +
+          "hover:bg-secondary/80 active:scale-[0.99] active:bg-secondary/90",
+        ghost:
+          "hover:bg-accent hover:text-accent-foreground active:scale-100 " +
+          "active:bg-accent/60",
+        link:
+          "text-gray-900 underline-offset-4 " +
+          "no-underline hover:underline " +
+          "active:scale-100 active:opacity-80 " +
+          "hover:text-gray-800 " +
+          "focus-visible:underline focus-visible:ring-2 focus-visible:ring-primary/40 " +
+          "focus-visible:ring-offset-2 dark:text-gray-900 dark:hover:text-gray-800 " +
+          "dark:focus-visible:ring-primary-400/50",
       },
       size: {
         default: "h-9 px-4 py-2",

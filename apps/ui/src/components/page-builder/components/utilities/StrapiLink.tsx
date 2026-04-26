@@ -7,11 +7,21 @@ import AppLink from "@/components/elementary/AppLink"
 import { StrapiBasicImage } from "@/components/page-builder/components/utilities/StrapiBasicImage"
 import { buttonVariants } from "@/components/ui/button"
 
+type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>
+
 export interface StrapiLinkProps {
   readonly component: Data.Component<"utilities.link"> | undefined | null
   readonly children?: React.ReactNode
   readonly className?: string
   readonly hideWhenMissing?: boolean
+  /** When set, overrides `decorations.variant` (e.g. force a solid CTA on a light background). */
+  readonly appLinkVariant?: NonNullable<VariantProps<typeof buttonVariants>["variant"]>
+  /** When set, overrides `decorations.size` (e.g. `lg` for a section CTA). */
+  readonly appLinkSize?: ButtonSize
+  /**
+   * If true, the anchor does not get button `h-9` / padding / `inline-flex` (use for image tiles, etc.).
+   */
+  readonly plain?: boolean
 }
 
 /** Picks fullPath from page relation (flat or REST nested shape). */
@@ -44,8 +54,6 @@ export function getStrapiLinkHref(
   return undefined
 }
 
-type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>
-
 function strapiDecorationSizeToAppLinkSize(
   s: string | null | undefined
 ): ButtonSize {
@@ -61,6 +69,9 @@ export function StrapiLink({
   children,
   className,
   hideWhenMissing,
+  appLinkVariant,
+  appLinkSize,
+  plain = false,
 }: StrapiLinkProps) {
   if (component == null && hideWhenMissing) {
     return null
@@ -69,12 +80,13 @@ export function StrapiLink({
   const { newTab = false, label, decorations } = component ?? {}
 
   const {
-    variant = "link",
+    variant: decorationVariant = "link",
     size = "default",
     leftIcon,
     rightIcon,
     hasIcons = false,
   } = decorations ?? {}
+  const variant = appLinkVariant ?? decorationVariant
 
   const linkHref = getStrapiLinkHref(component) ?? undefined
 
@@ -86,6 +98,7 @@ export function StrapiLink({
     <AppLink
       href={linkHref}
       openInNewTab={newTab ?? false}
+      plain={plain}
       className={className}
       startAdornment={
         hasIcons && leftIcon ? (
@@ -98,7 +111,7 @@ export function StrapiLink({
         ) : undefined
       }
       variant={variant}
-      size={strapiDecorationSizeToAppLinkSize(size)}
+      size={appLinkSize ?? strapiDecorationSizeToAppLinkSize(size)}
     >
       {children ?? label}
     </AppLink>

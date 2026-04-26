@@ -1,89 +1,25 @@
-"use client"
-
-import { useEffect, useState } from "react"
-
 import type { Data } from "@repo/strapi-types"
 
-interface StrapiQuoteCarouselProps {
-  readonly component:
-  | Data.Component<"utilities.quote-carousel">
-  | Data.Component<"sections.quote-carousel">
-  readonly className?: string
-  readonly title?: string
-}
+import { Container } from "@/components/elementary/Container"
+import StrapiQuoteCarousel from "@/components/page-builder/components/utilities/StrapiQuoteCarousel"
+import { pageBuilderSectionY } from "@/components/page-builder/section-layout"
 
 export function StrapiQuoteCarouselSection({
   component,
-  className,
-  title,
-}: StrapiQuoteCarouselProps) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isVisible, setIsVisible] = useState(true)
-
-  const currentQuote = component.quotes?.[currentIndex] || null
-
-  useEffect(() => {
-    const quotes = component.quotes
-    if (!quotes?.length) return
-
-    const calculateReadingTime = (text: string) => {
-      const words = text.split(" ").length
-      const readingSpeed = 300 // words per minute
-      const baseTime = (words / readingSpeed) * 60 * 1000 // convert to ms
-      const minTime = 4000 // minimum 4 seconds
-      const maxTime = 20000 // maximum 20 seconds
-      return Math.max(minTime, Math.min(maxTime, baseTime * 1.5)) // 1.5x reading time for contemplation
-    }
-
-    let timeoutId: NodeJS.Timeout
-
-    const scheduleNext = () => {
-      if (quotes.length <= 1) return
-
-      const nextInterval = calculateReadingTime(
-        quotes[currentIndex]?.text || ""
-      )
-      timeoutId = setTimeout(() => {
-        setIsVisible(false)
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % quotes.length)
-          setIsVisible(true)
-          scheduleNext()
-        }, 500)
-      }, nextInterval)
-    }
-
-    scheduleNext()
-
-    return () => clearTimeout(timeoutId)
-  }, [component.quotes, currentIndex])
-
-  if (!currentQuote?.text) return null
-
+}: {
+  readonly component: Data.Component<"sections.quote-carousel">
+}) {
   return (
-    <div className={className}>
-      {title && (
-        <h2 className="mb-8 text-center text-2xl font-bold">{title}</h2>
-      )}
-      <div
-        className="flex min-h-[150px] flex-col justify-between rounded-lg p-6"
-        style={{ backgroundColor: "var(--color-gray-100)" }}
-      >
-        <div
-          className={`transition-all duration-500 ease-in-out ${isVisible ? "translate-y-0 transform opacity-100" : "-translate-y-2 transform opacity-0"}`}
-        >
-          <p className="italic">&ldquo;{currentQuote.text}&rdquo;</p>
+    <section aria-label="Quote">
+      <Container className={pageBuilderSectionY}>
+        <div className="mx-auto w-full max-w-4xl">
+          <StrapiQuoteCarousel component={component} variant="section" />
         </div>
-        {currentQuote.author && (
-          <div
-            className={`transition-all delay-100 duration-500 ease-in-out ${isVisible ? "translate-y-0 transform opacity-100" : "translate-y-2 transform opacity-0"}`}
-          >
-            <p className="text-right font-medium">- {currentQuote.author}</p>
-          </div>
-        )}
-      </div>
-    </div>
+      </Container>
+    </section>
   )
 }
+
+StrapiQuoteCarouselSection.displayName = "StrapiQuoteCarouselSection"
 
 export default StrapiQuoteCarouselSection

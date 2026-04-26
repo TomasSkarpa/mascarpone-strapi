@@ -17,7 +17,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
   return (
     <Link
       href={`/${locale}/projects/${project.documentId}`}
-      className="flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-shadow hover:shadow-xl"
+      className="portfolio-card-lift flex h-full flex-col overflow-hidden rounded-lg bg-white shadow-lg transition-[box-shadow,transform] hover:shadow-xl active:scale-[0.995] active:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2"
     >
       {project.image?.url && (
         <div className="relative aspect-video">
@@ -32,8 +32,10 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
 
       <div className="flex flex-grow flex-col p-6">
         <div className="flex-grow">
-          <h3 className="mb-2 text-xl font-bold">{project.title}</h3>
-          <p className="mb-4 line-clamp-3 text-gray-600">
+          <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-900">
+            {project.title}
+          </h3>
+          <p className="mb-4 line-clamp-3 text-gray-800">
             {project.description}
           </p>
         </div>
@@ -61,7 +63,7 @@ export function ProjectTile({ project, locale }: ProjectTileProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={(e) => e.stopPropagation()}
-                  className="rounded bg-blue-600 px-3 py-1 text-sm text-white transition-colors hover:bg-blue-700"
+                  className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:brightness-110 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-blue-600 active:scale-95"
                 >
                   {link.type}
                 </a>

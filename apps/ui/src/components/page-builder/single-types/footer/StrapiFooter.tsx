@@ -14,7 +14,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
   if (!component) return null
 
   return (
-    <footer className="border-t border-gray-200 bg-white text-gray-900">
+    <footer className="border-t border-gray-200 bg-white text-gray-900 dark:bg-white">
       <Container className="px-4 py-12 md:px-6 lg:py-16">
         <div className="space-y-12">
           {/* Main Content */}
@@ -24,7 +24,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
               {component.quoteCarousel && (
                 <StrapiQuoteCarousel
                   component={component.quoteCarousel}
-                  className="max-w-md text-sm leading-relaxed text-gray-500"
+                  className="max-w-md"
                 />
               )}
 
@@ -47,7 +47,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
               >
                 {component.sections?.slice(0, 4).map((section) => (
                   <div key={section.id} className="space-y-4">
-                    <h3 className="text-sm font-semibold text-gray-900">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-900">
                       {section.title}
                     </h3>
                     <nav className="space-y-3">
@@ -55,7 +55,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                         <StrapiLink
                           key={`${link.id}-${i}`}
                           component={link}
-                          className="block text-sm text-gray-600 transition-colors duration-200 hover:text-gray-900"
+                          className="block text-sm !text-gray-900 no-underline transition-colors duration-200 hover:!text-gray-800 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600/40 focus-visible:ring-offset-2 dark:!text-gray-900 dark:hover:!text-gray-800"
                         />
                       ))}
                     </nav>
@@ -69,7 +69,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
           <div className="flex flex-col gap-4 border-t pt-8 md:flex-row md:items-center md:justify-between">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
               {component.copyRight && (
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-600 dark:text-gray-600">
                   {component.includeYear
                     ? `© ${new Date().getFullYear()} ${component.copyRight}`
                     : component.copyRight}
@@ -83,7 +83,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
                   <StrapiLink
                     key={`${link.id}-${i}`}
                     component={link}
-                    className="w-full !items-start !justify-start py-2 text-left text-sm text-gray-600 transition-colors duration-200 hover:text-gray-700 md:w-auto md:py-0"
+                    className="w-full !items-start !justify-start py-2 text-left text-sm !text-gray-900 no-underline transition-colors duration-200 hover:text-gray-800 hover:underline focus-visible:ring-2 focus-visible:ring-primary-600/40 focus-visible:ring-offset-2 md:w-auto md:py-0 dark:!text-gray-900 dark:hover:text-gray-800"
                   />
                 ))}
               </nav>

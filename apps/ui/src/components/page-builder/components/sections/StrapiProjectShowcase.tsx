@@ -2,6 +2,10 @@ import type { Data } from "@repo/strapi-types"
 
 import { Container } from "@/components/elementary/Container"
 import { ProjectTile } from "@/components/elementary/ProjectTile"
+import {
+  pageBuilderSectionTitleClass,
+  pageBuilderSectionY,
+} from "@/components/page-builder/section-layout"
 
 interface StrapiProjectShowcaseProps {
   readonly component: Data.Component<"sections.project-showcase">
@@ -13,15 +17,17 @@ export function StrapiProjectShowcase({
   if (!component.projects?.length) return null
 
   return (
-    <section className="py-12">
-      <Container>
+    <section>
+      <Container className={pageBuilderSectionY}>
         {component.title && (
-          <h2 className="mb-12 text-center text-3xl font-bold">
+          <h2
+            className={`mb-10 text-balance text-center sm:mb-12 ${pageBuilderSectionTitleClass}`}
+          >
             {component.title}
           </h2>
         )}
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {component.projects.map((project, i) => (
             <ProjectTile
               key={`${project.documentId}-${i}`}

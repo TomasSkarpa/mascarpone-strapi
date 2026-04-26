@@ -32,7 +32,7 @@ export function NewsletterForm() {
 
   async function onSubmit(values: FormSchemaType) {
     // TODO: Add submit logic
-    // eslint-disable-next-line no-console
+     
     console.log("Form submitted", values)
   }
 
@@ -66,7 +66,7 @@ export function NewsletterForm() {
                 </FormControl>
                 <Button
                   type="submit"
-                  className="absolute top-1/2 right-3 aspect-square w-8 -translate-y-1/2 rounded-md bg-gradient-to-r from-red-600 to-red-700 p-0 shadow-md hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg"
+                  className="absolute top-1/2 right-3 z-20 aspect-square w-8 -translate-y-1/2 rounded-md bg-gradient-to-r from-red-600 to-red-700 p-0 shadow-md hover:scale-[1.02] hover:from-red-700 hover:to-red-800 hover:shadow-lg"
                   aria-label="Submit form"
                 >
                   <MoveRight className="size-4" />

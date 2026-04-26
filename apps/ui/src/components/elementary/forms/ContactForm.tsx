@@ -71,7 +71,7 @@ export function ContactForm({
           label={t("message")}
           aria-label="contact-message"
           containerClassName="space-y-2"
-          fieldClassName="min-h-32 p-4 bg-white border-gray-300 rounded-lg transition-all duration-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 hover:border-gray-400 resize-none"
+          fieldClassName="min-h-32 resize-none rounded-lg border border-gray-300 bg-white p-4 transition-all duration-200 hover:border-gray-400 focus:border-blue-500 focus-visible:ring-2 focus-visible:ring-blue-500/30"
         />
       </AppForm>
 
@@ -81,7 +81,7 @@ export function ContactForm({
             <span>{t("gdpr")}</span>
             <AppLink
               openInNewTab={gdpr.newTab}
-              className="font-medium text-blue-600 underline-offset-2 transition-colors duration-200 hover:text-blue-700 hover:underline"
+              className="rounded font-medium text-blue-600 underline-offset-2 transition-colors duration-200 hover:text-blue-700 hover:underline focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2"
               href={gdpr?.href}
             >
               {gdpr.label || t("gdprLink")}
@@ -91,7 +91,7 @@ export function ContactForm({
 
         <Button
           type="submit"
-          className="h-12 w-full rounded-lg bg-blue-600 font-semibold text-white shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-12 w-full md:w-full"
           form={contactFormName}
           isLoading={contactFormMutation.isPending}
         >
