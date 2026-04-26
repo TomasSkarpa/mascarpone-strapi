@@ -57,7 +57,7 @@ export function StrapiMobileNavbar({
 
   return (
     <>
-      <div className="flex h-16 items-center justify-between px-4">
+      <div className="flex h-16 items-center justify-between px-8">
         <div className="flex items-center">
           {navbar.logoImage ? (
             <StrapiImageWithLink
@@ -69,7 +69,11 @@ export function StrapiMobileNavbar({
               }}
             />
           ) : (
-            <AppLink href="/" className="text-xl font-bold">
+            <AppLink
+              href="/"
+              plain
+              className="inline-flex shrink-0 pr-4 text-xl font-bold"
+            >
               <Image
                 src="/images/logo.svg"
                 alt="logo"
@@ -130,7 +134,7 @@ export function StrapiMobileNavbar({
             onKeyDown={(e) => e.key === "Escape" && setIsOpen(false)}
           >
             {/* Header */}
-            <div className="relative z-10 flex h-16 items-center justify-between border-b border-gray-200 px-4">
+            <div className="relative z-10 flex h-16 items-center justify-between border-b border-gray-200 px-8">
               <div className="flex items-center">
                 {navbar.logoImage ? (
                   <StrapiImageWithLink
@@ -142,7 +146,11 @@ export function StrapiMobileNavbar({
                     }}
                   />
                 ) : (
-                  <AppLink href="/" className="text-xl font-bold">
+                  <AppLink
+                    href="/"
+                    plain
+                    className="inline-flex shrink-0 pr-4 text-xl font-bold"
+                  >
                     <Image
                       src="/images/logo.svg"
                       alt="logo"
@@ -190,7 +198,7 @@ export function StrapiMobileNavbar({
                         <AppLink
                           href={href}
                           onClick={() => setIsOpen(false)}
-                          className={`block w-full px-6 py-4 text-left text-base transition-colors duration-200 ${
+                          className={`block w-full px-12 py-4 text-left text-base transition-colors duration-200 ${
                             isActive
                               ? "border-l-4 border-l-[var(--color-brand-red)] bg-[var(--color-brand-red)]/10 font-semibold text-[var(--color-brand-red)]"
                               : "text-gray-800 hover:bg-gray-50 hover:text-[var(--color-brand-red)]"
@@ -204,7 +212,7 @@ export function StrapiMobileNavbar({
                 </div>
               )}
 
-              <div className="border-t border-gray-200 bg-gray-50/30 px-6 py-4">
+              <div className="border-t border-gray-200 bg-gray-50/30 px-12 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     {navbar.socialIcons?.map((socialIcon) => (

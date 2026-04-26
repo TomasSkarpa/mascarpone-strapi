@@ -2,7 +2,6 @@ import { use } from "react"
 import { Locale } from "next-intl"
 
 import { fetchFooter } from "@/lib/strapi-api/content/server"
-import { Container } from "@/components/elementary/Container"
 import StrapiLink from "@/components/page-builder/components/utilities/StrapiLink"
 import StrapiQuoteCarousel from "@/components/page-builder/components/utilities/StrapiQuoteCarousel"
 import StrapiSocialIcon from "@/components/page-builder/components/utilities/StrapiSocialIcon"
@@ -14,8 +13,9 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
   if (!component) return null
 
   return (
-    <footer className="border-t border-gray-200 bg-white text-gray-900 dark:bg-white">
-      <Container className="px-4 py-12 md:px-6 lg:py-16">
+    <footer className="w-full border-t border-gray-200 bg-white text-gray-900 dark:bg-white">
+      {/* Full-width strip; horizontal insets match StrapiNavbar (px-8 / md:px-16) */}
+      <div className="w-full px-8 py-12 md:px-16 lg:py-16">
         <div className="space-y-12">
           {/* Main Content */}
           <div className="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
@@ -90,7 +90,7 @@ export function StrapiFooter({ locale }: { readonly locale: Locale }) {
             )}
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
   )
 }

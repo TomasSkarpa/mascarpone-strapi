@@ -17,8 +17,11 @@ export function StrapiHero({
 }: {
   readonly component: Data.Component<"sections.hero">
 }) {
+  const bgColor = component.bgColor?.trim() || undefined
   return (
-    <section style={{ backgroundColor: component.bgColor ?? "transparent" }}>
+    <section
+      style={bgColor ? { backgroundColor: bgColor } : undefined}
+    >
       <Container
         className={cn(
           "flex flex-col gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14",
@@ -63,7 +66,7 @@ export function StrapiHero({
                   key={i}
                   component={link}
                   appLinkVariant="default"
-                  className="inline-flex !min-h-12 !no-underline !text-white"
+                  className="inline-flex !min-h-12 !no-underline"
                 />
               ))}
             </div>

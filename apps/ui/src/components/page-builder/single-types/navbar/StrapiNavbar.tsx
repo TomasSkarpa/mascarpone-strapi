@@ -39,7 +39,7 @@ export function StrapiNavbar({ locale }: { readonly locale: Locale }) {
     <header className="sticky top-0 z-40 w-full border-b bg-white/90 shadow-sm backdrop-blur transition-colors duration-300">
       {/* Desktop Navigation */}
       <div className="hidden md:block">
-        <div className="flex h-16 items-center justify-between px-8">
+        <div className="flex h-16 items-center justify-between px-16">
           <div className="flex items-center">
             {navbar.logoImage ? (
               <StrapiImageWithLink
@@ -51,7 +51,11 @@ export function StrapiNavbar({ locale }: { readonly locale: Locale }) {
                 }}
               />
             ) : (
-              <AppLink href="/" className="text-2xl font-bold">
+              <AppLink
+                href="/"
+                plain
+                className="inline-flex shrink-0 pr-4 text-2xl font-bold"
+              >
                 <Image
                   src="/images/logo.svg"
                   alt="logo"

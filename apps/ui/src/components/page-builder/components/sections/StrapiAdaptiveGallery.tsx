@@ -51,7 +51,18 @@ export function StrapiAdaptiveGallery({
   const isAutoAspect = (component.imageAspectRatio || "").startsWith("auto")
 
   const IMAGES_LIMIT = 12
-  const allImages = component.images || []
+  // Omit gallery rows that reference the removed/missing `networks_coach` file on the CMS
+  const BROKEN_GALLERY_FILE = /networks[._-]coach/i
+  const allImages = (component.images || []).filter((row) => {
+    const media = row.image?.media
+    if (!media || typeof media !== "object") {
+      return true
+    }
+    const meta = [media.name, media.url, media.hash]
+      .filter((x): x is string => typeof x === "string")
+      .join(" ")
+    return !BROKEN_GALLERY_FILE.test(meta)
+  })
   const displayedImages = showAll ? allImages : allImages.slice(0, IMAGES_LIMIT)
   const hasMore = allImages.length > IMAGES_LIMIT
 
