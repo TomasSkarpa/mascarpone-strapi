@@ -78,6 +78,7 @@ const projectPopulateObject: Modules.Documents.ServiceParams<"api::project.proje
         "forms.newsletter-form": { populate: { gdpr: true } },
         "forms.contact-form": { populate: { gdpr: true } },
         "utilities.ck-editor-content": true,
+        "sections.scheduled-fal-output": true,
       },
     },
   }

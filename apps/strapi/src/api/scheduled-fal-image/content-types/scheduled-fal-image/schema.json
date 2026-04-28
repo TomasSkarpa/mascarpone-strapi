@@ -1,0 +1,63 @@
+{
+  "kind": "singleType",
+  "collectionName": "scheduled_fal_images",
+  "info": {
+    "singularName": "scheduled-fal-image",
+    "pluralName": "scheduled-fal-images",
+    "displayName": "Scheduled fal image",
+    "description": "Server-side fal generation on an interval; output is shown via the Scheduled fal output page section."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "enabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "falModelId": {
+      "type": "string",
+      "required": false
+    },
+    "prompt": {
+      "type": "text",
+      "required": false
+    },
+    "extraInputJson": {
+      "type": "json",
+      "required": false
+    },
+    "sourceImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "outputImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "minIntervalHours": {
+      "type": "integer",
+      "default": 48,
+      "min": 1
+    },
+    "lastGeneratedAt": {
+      "type": "datetime"
+    },
+    "lastJobStartedAt": {
+      "type": "datetime"
+    },
+    "lastJobStatus": {
+      "type": "enumeration",
+      "enum": ["idle", "running", "success", "error"],
+      "default": "idle"
+    },
+    "lastError": {
+      "type": "text"
+    }
+  }
+}

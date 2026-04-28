@@ -11,6 +11,7 @@ import StrapiHero from "@/components/page-builder/components/sections/StrapiHero
 import StrapiImageWithCTAButton from "@/components/page-builder/components/sections/StrapiImageWithCTAButton"
 import StrapiProjectShowcase from "@/components/page-builder/components/sections/StrapiProjectShowcase"
 import StrapiQuoteCarouselSection from "@/components/page-builder/components/sections/StrapiQuoteCarousel"
+import StrapiScheduledFalOutput from "@/components/page-builder/components/sections/StrapiScheduledFalOutput"
 import StrapiSectionLabeledDivider from "@/components/page-builder/components/sections/StrapiSectionLabeledDivider"
 import StrapiTimeline from "@/components/page-builder/components/sections/StrapiTimeline"
 import StrapiCkEditorContent from "@/components/page-builder/components/utilities/StrapiCkEditorContent"
@@ -44,6 +45,7 @@ export const PageContentComponents: {
   "sections.quote-carousel": StrapiQuoteCarouselSection,
   "sections.project-showcase": StrapiProjectShowcase,
   "sections.section-labeled-divider": StrapiSectionLabeledDivider,
+  "sections.scheduled-fal-output": StrapiScheduledFalOutput,
 
   // Forms
   "forms.contact-form": StrapiContactForm,

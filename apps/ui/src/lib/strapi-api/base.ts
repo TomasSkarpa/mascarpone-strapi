@@ -19,6 +19,7 @@ export const API_ENDPOINTS: { [key in UID.ContentType]?: string } = {
   "api::navbar.navbar": "/navbar",
   "api::subscriber.subscriber": "/subscribers",
   "api::project.project": "/projects",
+  "api::scheduled-fal-image.scheduled-fal-image": "/scheduled-fal-image",
 } as const
 
 export default abstract class BaseStrapiClient {

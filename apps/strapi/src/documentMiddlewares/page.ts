@@ -112,6 +112,7 @@ const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["fin
           },
         },
         "sections.section-labeled-divider": true,
+        "sections.scheduled-fal-output": true,
         "forms.newsletter-form": newsletterFormPopulate,
         "forms.contact-form": contactFormPopulate,
         "utilities.ck-editor-content": true,

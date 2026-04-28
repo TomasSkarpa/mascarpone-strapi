@@ -213,6 +213,18 @@ export interface SectionsQuoteCarousel extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsScheduledFalOutput extends Struct.ComponentSchema {
+  collectionName: "components_sections_scheduled_fal_outputs"
+  info: {
+    description: "Displays the latest image from Scheduled fal image (singleton). Configure generation in that entry."
+    displayName: "Scheduled fal output"
+  }
+  attributes: {
+    description: Schema.Attribute.Text
+    title: Schema.Attribute.String
+  }
+}
+
 export interface SectionsSectionLabeledDivider extends Struct.ComponentSchema {
   collectionName: "components_sections_section_labeled_dividers"
   info: {
@@ -635,6 +647,7 @@ declare module "@strapi/strapi" {
       "sections.image-with-cta-button": SectionsImageWithCtaButton
       "sections.project-showcase": SectionsProjectShowcase
       "sections.quote-carousel": SectionsQuoteCarousel
+      "sections.scheduled-fal-output": SectionsScheduledFalOutput
       "sections.section-labeled-divider": SectionsSectionLabeledDivider
       "sections.timeline": SectionsTimeline
       "seo-utilities.seo": SeoUtilitiesSeo

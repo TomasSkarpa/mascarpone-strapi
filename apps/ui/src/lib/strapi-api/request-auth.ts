@@ -6,6 +6,7 @@ const ALLOWED_STRAPI_ENDPOINTS: Record<string, string[]> = {
     "api/projects",
     "api/footer",
     "api/navbar",
+    "api/scheduled-fal-image",
     "api/users/me",
     "api/auth/local",
     // Allow specific providers callbacks if needed

@@ -14,6 +14,22 @@ const sayHelloJob = {
   },
 }
 
+/**
+ * Checks whether a fal generation is due (interval is configured on the singleton).
+ * Runs daily; enable with CRON_ENABLED=true in .env.
+ */
+const scheduledFalImageJob = {
+  task: async ({ strapi }) => {
+    await strapi
+      .service("api::scheduled-fal-image.scheduled-fal-image")
+      .runGenerationIfDue()
+  },
+  options: {
+    rule: "0 8 * * *",
+  },
+}
+
 export default {
   sayHelloJob,
+  scheduledFalImageJob,
 }

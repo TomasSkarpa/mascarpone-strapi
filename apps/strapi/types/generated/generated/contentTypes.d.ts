@@ -632,6 +632,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.quote-carousel",
         "sections.project-showcase",
         "sections.section-labeled-divider",
+        "sections.scheduled-fal-output",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -711,6 +712,7 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
         "sections.timeline",
         "sections.quote-carousel",
         "sections.project-showcase",
+        "sections.scheduled-fal-output",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -789,6 +791,56 @@ export interface ApiRedirectRedirect extends Struct.CollectionTypeSchema {
     permanent: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
     publishedAt: Schema.Attribute.DateTime
     source: Schema.Attribute.String & Schema.Attribute.Required
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
+export interface ApiScheduledFalImageScheduledFalImage
+  extends Struct.SingleTypeSchema {
+  collectionName: "scheduled_fal_images"
+  info: {
+    description: "Server-side fal generation on an interval; output is shown via the Scheduled fal output page section."
+    displayName: "Scheduled fal image"
+    pluralName: "scheduled-fal-images"
+    singularName: "scheduled-fal-image"
+  }
+  options: {
+    draftAndPublish: false
+  }
+  attributes: {
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    enabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
+    extraInputJson: Schema.Attribute.JSON
+    falModelId: Schema.Attribute.String
+    lastError: Schema.Attribute.Text
+    lastGeneratedAt: Schema.Attribute.DateTime
+    lastJobStartedAt: Schema.Attribute.DateTime
+    lastJobStatus: Schema.Attribute.Enumeration<
+      ["idle", "running", "success", "error"]
+    > &
+      Schema.Attribute.DefaultTo<"idle">
+    locale: Schema.Attribute.String & Schema.Attribute.Private
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::scheduled-fal-image.scheduled-fal-image"
+    > &
+      Schema.Attribute.Private
+    minIntervalHours: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<48>
+    outputImage: Schema.Attribute.Media<"images">
+    prompt: Schema.Attribute.Text
+    publishedAt: Schema.Attribute.DateTime
+    sourceImage: Schema.Attribute.Media<"images">
     updatedAt: Schema.Attribute.DateTime
     updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
@@ -1343,6 +1395,7 @@ declare module "@strapi/strapi" {
       "api::page.page": ApiPagePage
       "api::project.project": ApiProjectProject
       "api::redirect.redirect": ApiRedirectRedirect
+      "api::scheduled-fal-image.scheduled-fal-image": ApiScheduledFalImageScheduledFalImage
       "api::subscriber.subscriber": ApiSubscriberSubscriber
       "plugin::content-releases.release": PluginContentReleasesRelease
       "plugin::content-releases.release-action": PluginContentReleasesReleaseAction

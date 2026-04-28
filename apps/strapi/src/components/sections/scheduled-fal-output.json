@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_scheduled_fal_outputs",
+  "info": {
+    "displayName": "Scheduled fal output",
+    "description": "Displays the latest image from Scheduled fal image (singleton). Configure generation in that entry."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

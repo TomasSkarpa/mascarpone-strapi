@@ -76,7 +76,8 @@
         "sections.timeline",
         "sections.quote-carousel",
         "sections.project-showcase",
-        "sections.section-labeled-divider"
+        "sections.section-labeled-divider",
+        "sections.scheduled-fal-output"
       ],
       "pluginOptions": {
         "i18n": {
