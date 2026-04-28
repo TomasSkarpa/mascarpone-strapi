@@ -216,8 +216,8 @@ export interface SectionsQuoteCarousel extends Struct.ComponentSchema {
 export interface SectionsScheduledFalOutput extends Struct.ComponentSchema {
   collectionName: "components_sections_scheduled_fal_outputs"
   info: {
-    description: "Displays the latest image from Scheduled fal image (singleton). Configure generation in that entry."
-    displayName: "Scheduled fal output"
+    description: "Displays the latest image from the FAL AI singleton. Configure generation in Content Manager \u2192 FAL AI."
+    displayName: "FAL AI output"
   }
   attributes: {
     description: Schema.Attribute.Text

@@ -801,8 +801,8 @@ export interface ApiScheduledFalImageScheduledFalImage
   extends Struct.SingleTypeSchema {
   collectionName: "scheduled_fal_images"
   info: {
-    description: "Server-side fal generation on an interval; output is shown via the Scheduled fal output page section."
-    displayName: "Scheduled fal image"
+    description: "Server-side fal generation on an interval; use the FAL AI output page section on pages to show the latest image."
+    displayName: "FAL AI"
     pluralName: "scheduled-fal-images"
     singularName: "scheduled-fal-image"
   }
@@ -829,6 +829,8 @@ export interface ApiScheduledFalImageScheduledFalImage
       "api::scheduled-fal-image.scheduled-fal-image"
     > &
       Schema.Attribute.Private
+    mediaUploadFolderName: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<"fal-history">
     minIntervalHours: Schema.Attribute.Integer &
       Schema.Attribute.SetMinMax<
         {

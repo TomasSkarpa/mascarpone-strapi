@@ -16,7 +16,7 @@ export default factories.createCoreController(
           ctx.request.headers as Record<string, string | string[] | undefined>
         )
       ) {
-        return ctx.forbidden("Not authorized to run scheduled fal generation")
+        return ctx.forbidden("Not authorized to run FAL AI generation")
       }
 
       const force =

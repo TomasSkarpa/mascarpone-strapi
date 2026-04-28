@@ -41,7 +41,7 @@ export async function StrapiScheduledFalOutput({
       statusMessage = res.data.lastError
     }
   } catch {
-    statusMessage = "Scheduled fal image could not be loaded."
+    statusMessage = "FAL AI content could not be loaded."
   }
 
   return (

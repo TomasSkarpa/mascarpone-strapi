@@ -12,6 +12,7 @@ import { fal } from "@fal-ai/client"
 import type { Core } from "@strapi/strapi"
 
 const UID = "api::scheduled-fal-image.scheduled-fal-image" as const
+const FOLDER_UID = "plugin::upload.folder" as const
 
 const STALE_RUNNING_MS = 45 * 60 * 1000
 
@@ -65,6 +66,27 @@ function mergeExtraJson(raw: unknown): Record<string, unknown> {
   return {}
 }
 
+/**
+ * Resolves the Media Library folder id for fal uploads.
+ * Folder name comes from the FAL AI singleton (`mediaUploadFolderName`), default `fal-history`.
+ */
+async function resolveFalUploadFolderId(
+  strapi: Core.Strapi,
+  folderNameFromSettings: string | null | undefined
+): Promise<number | null> {
+  const name = folderNameFromSettings?.trim() || "fal-history"
+  const folder = await strapi.db.query(FOLDER_UID).findOne({
+    where: { name },
+  })
+  if (!folder?.id) {
+    strapi.log.warn(
+      `[scheduled-fal-image] Media Library folder "${name}" not found; upload goes to the library default.`
+    )
+    return null
+  }
+  return folder.id
+}
+
 export default factories.createCoreService(UID, ({ strapi }) => ({
   async runGenerationIfDue() {
     return strapi.service(UID).runGeneration({ force: false })
@@ -81,7 +103,7 @@ export default factories.createCoreService(UID, ({ strapi }) => ({
 
     if (!doc) {
       strapi.log.warn(
-        "[scheduled-fal-image] No singleton document yet. Create and save Scheduled fal image in the admin."
+        "[scheduled-fal-image] No singleton document yet. Create and save FAL AI in the admin."
       )
       return { ok: false, skipped: true, reason: "no_document" as const }
     }
@@ -139,7 +161,7 @@ export default factories.createCoreService(UID, ({ strapi }) => ({
     const modelId = doc.falModelId?.trim()
     const prompt = doc.prompt?.trim()
     if (!modelId || !prompt) {
-      const msg = "falModelId and prompt must be set in Scheduled fal image"
+      const msg = "falModelId and prompt must be set in FAL AI"
       await strapi.documents(UID).update({
         documentId,
         data: { lastJobStatus: "error", lastError: msg },
@@ -193,15 +215,20 @@ export default factories.createCoreService(UID, ({ strapi }) => ({
 
       try {
         const stat = await fs.stat(tmpPath)
+        const folderId = await resolveFalUploadFolderId(
+          strapi,
+          (doc as { mediaUploadFolderName?: string | null })
+            .mediaUploadFolderName
+        )
         const uploaded = (await strapi
           .plugin("upload")
           .service("upload")
           .upload({
-            data: {},
+            data: folderId != null ? { fileInfo: { folder: folderId } } : {},
             files: {
-              path: tmpPath,
-              name: `fal-scheduled-${Date.now()}.png`,
-              type: "image/png",
+              filepath: tmpPath,
+              originalFilename: `fal-scheduled-${Date.now()}.png`,
+              mimetype: "image/png",
               size: stat.size,
             },
           })) as { id?: number; documentId?: string }[]

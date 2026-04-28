@@ -5,7 +5,7 @@ import type { Core } from "@strapi/strapi"
 type Headers = Record<string, string | string[] | undefined>
 
 /**
- * Validates callers of the scheduled fal manual trigger endpoint.
+ * Validates callers of the FAL AI manual trigger endpoint.
  * Accepts: `x-fal-scheduled-image-trigger-secret` when it matches
  * `FAL_SCHEDULED_IMAGE_TRIGGER_SECRET`, or a Strapi admin JWT in `Authorization: Bearer`.
  */

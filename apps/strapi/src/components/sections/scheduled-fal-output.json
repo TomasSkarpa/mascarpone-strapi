@@ -1,8 +1,8 @@
 {
   "collectionName": "components_sections_scheduled_fal_outputs",
   "info": {
-    "displayName": "Scheduled fal output",
-    "description": "Displays the latest image from Scheduled fal image (singleton). Configure generation in that entry."
+    "displayName": "FAL AI output",
+    "description": "Displays the latest image from the FAL AI singleton. Configure generation in Content Manager → FAL AI."
   },
   "options": {},
   "attributes": {

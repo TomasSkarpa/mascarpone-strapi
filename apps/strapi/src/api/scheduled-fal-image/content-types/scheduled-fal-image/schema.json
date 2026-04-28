@@ -4,8 +4,8 @@
   "info": {
     "singularName": "scheduled-fal-image",
     "pluralName": "scheduled-fal-images",
-    "displayName": "Scheduled fal image",
-    "description": "Server-side fal generation on an interval; output is shown via the Scheduled fal output page section."
+    "displayName": "FAL AI",
+    "description": "Server-side fal generation on an interval; use the FAL AI output page section on pages to show the latest image."
   },
   "options": {
     "draftAndPublish": false
@@ -39,6 +39,12 @@
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
+    },
+    "mediaUploadFolderName": {
+      "type": "string",
+      "default": "fal-history",
+      "required": false,
+      "description": "Existing Media Library folder name (create it under Media Library first)."
     },
     "minIntervalHours": {
       "type": "integer",
