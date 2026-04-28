@@ -16,7 +16,7 @@ export default async function NotFound() {
           <h1 className="text-2xl font-semibold tracking-tight text-balance whitespace-pre-line sm:text-3xl">
             {t("title")}
           </h1>
-          <p className="text-muted-foreground mt-3 mb-[calc(1rem*1.08)] text-pretty text-sm leading-relaxed sm:mt-4 sm:mb-[calc(1.125rem*1.08)] sm:text-base">
+          <p className="text-muted-foreground mt-3 mb-[calc(1rem*1.08)] text-sm leading-relaxed text-pretty sm:mt-4 sm:mb-[calc(1.125rem*1.08)] sm:text-base">
             {t("description")}
           </p>
         </div>
