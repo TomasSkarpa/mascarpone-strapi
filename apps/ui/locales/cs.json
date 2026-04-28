@@ -90,8 +90,7 @@
 
     "notFound": {
       "title": "Dort nenalezen.\nA stránka taky ne.",
-      "description": "Někdo sem vložil špatnou adresu. Možná ty. Možná osud. Každopádně není to naše chyba.",
-      "solution": "Tato stránka neexistuje. Dort také neexistuje, ale to tě teď nezajímá.\n\nVrať se domů. Tam alespoň víš, co existuje.",
+      "description": "This page was going to be here. Then we changed our minds. For science.",
       "gifAlt": "GIF s dortovým failem",
       "redirect": "Vzdát to a jít domů"
     },

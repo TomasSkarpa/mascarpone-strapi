@@ -90,8 +90,7 @@
 
     "notFound": {
       "title": "The cake was a lie. So was this URL.",
-      "description": "The enrichment center apologizes. This page was also never on the server.",
-      "solution": "Crawl back home. Mascarpone is real, at least until the next test chamber. (Yours, not the cake's.)",
+      "description": "This page was going to be here. Then we changed our minds. For science.",
       "gifAlt": "Cake fail GIF",
       "redirect": "Go to home page"
     },
