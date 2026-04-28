@@ -814,7 +814,6 @@ export interface ApiScheduledFalImageScheduledFalImage
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
     enabled: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>
-    extraInputJson: Schema.Attribute.JSON
     falModelId: Schema.Attribute.String
     lastError: Schema.Attribute.Text
     lastGeneratedAt: Schema.Attribute.DateTime

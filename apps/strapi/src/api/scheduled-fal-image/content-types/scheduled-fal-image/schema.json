@@ -24,10 +24,6 @@
       "type": "text",
       "required": false
     },
-    "extraInputJson": {
-      "type": "json",
-      "required": false
-    },
     "sourceImage": {
       "type": "media",
       "multiple": false,
