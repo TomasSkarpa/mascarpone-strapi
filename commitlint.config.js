@@ -4,6 +4,9 @@ module.exports = {
     "@commitlint/config-pnpm-scopes",
   ],
   rules: {
-    "header-max-length": [2, "always", 72],
+    // Default conventional body/footer line caps are 100; subject was 72 (very tight for scopes).
+    "header-max-length": [2, "always", 120],
+    "body-max-line-length": [2, "always", 200],
+    "footer-max-line-length": [2, "always", 200],
   },
 }
