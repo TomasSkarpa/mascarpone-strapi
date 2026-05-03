@@ -77,7 +77,8 @@
         "sections.quote-carousel",
         "sections.project-showcase",
         "sections.section-labeled-divider",
-        "sections.scheduled-fal-output"
+        "sections.scheduled-fal-output",
+        "sections.commendations-panel"
       ],
       "pluginOptions": {
         "i18n": {

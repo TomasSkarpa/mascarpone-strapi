@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_utilities_commendation_items",
+  "info": {
+    "displayName": "CommendationItem",
+    "description": "Single commendation with quote, attribution, and optional avatar"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "text",
+      "required": true
+    },
+    "authorName": {
+      "type": "string",
+      "required": true
+    },
+    "authorEmoji": {
+      "type": "string",
+      "description": "Optional emoji shown before the author name"
+    },
+    "roleTitle": {
+      "type": "string",
+      "description": "Job title or role"
+    },
+    "company": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "component",
+      "repeatable": false,
+      "component": "utilities.basic-image"
+    }
+  }
+}

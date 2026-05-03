@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_sections_commendations_panels",
+  "info": {
+    "displayName": "CommendationsPanel",
+    "description": "Grid of commendations with a labeled section header"
+  },
+  "options": {},
+  "attributes": {
+    "sectionLabel": {
+      "type": "string",
+      "required": true,
+      "description": "Short label shown in the centered badge (e.g. COMMENDATIONS)"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "utilities.commendation-item",
+      "required": true
+    }
+  }
+}

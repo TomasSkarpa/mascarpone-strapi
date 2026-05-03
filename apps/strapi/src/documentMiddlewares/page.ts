@@ -45,6 +45,13 @@ export const dynamicZonePageContentPopulate = {
       },
     },
     "sections.section-labeled-divider": true,
+    "sections.commendations-panel": {
+      populate: {
+        items: {
+          populate: { avatar: { populate: { media: true } } },
+        },
+      },
+    },
     "sections.scheduled-fal-output": true,
     "forms.newsletter-form": newsletterFormPopulate,
     "forms.contact-form": contactFormPopulate,
@@ -133,8 +140,8 @@ export const registerPopulatePageMiddleware = ({ strapi }) => {
         isSinglePageQuery(requestParams))
 
     if (allowPopulate) {
-      requestParams.middlewarePopulate!
-        .filter((populateAttr) =>
+      requestParams
+        .middlewarePopulate!.filter((populateAttr) =>
           Object.keys(populateObject).includes(populateAttr)
         )
         .forEach((populateAttr) => {

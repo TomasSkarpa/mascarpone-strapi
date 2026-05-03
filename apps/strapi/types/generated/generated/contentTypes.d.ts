@@ -633,6 +633,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         "sections.project-showcase",
         "sections.section-labeled-divider",
         "sections.scheduled-fal-output",
+        "sections.commendations-panel",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{
@@ -803,6 +804,7 @@ export interface ApiProjectsPageProjectsPage extends Struct.SingleTypeSchema {
         "sections.project-showcase",
         "sections.section-labeled-divider",
         "sections.scheduled-fal-output",
+        "sections.commendations-panel",
       ]
     > &
       Schema.Attribute.SetPluginOptions<{

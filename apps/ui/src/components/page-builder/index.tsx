@@ -5,6 +5,7 @@ import StrapiNewsletterForm from "@/components/page-builder/components/forms/Str
 import StrapiAdaptiveGallery from "@/components/page-builder/components/sections/StrapiAdaptiveGallery"
 import StrapiAnimatedLogoRow from "@/components/page-builder/components/sections/StrapiAnimatedLogoRow"
 import StrapiAttachmentDownload from "@/components/page-builder/components/sections/StrapiAttachmentDownload"
+import StrapiCommendationsPanel from "@/components/page-builder/components/sections/StrapiCommendationsPanel"
 import StrapiFaq from "@/components/page-builder/components/sections/StrapiFaq"
 import StrapiHeadingWithCTAButton from "@/components/page-builder/components/sections/StrapiHeadingWithCTAButton"
 import StrapiHero from "@/components/page-builder/components/sections/StrapiHero"
@@ -36,6 +37,7 @@ export const PageContentComponents: {
   // Sections
   "sections.animated-logo-row": StrapiAnimatedLogoRow,
   "sections.attachment-download": StrapiAttachmentDownload,
+  "sections.commendations-panel": StrapiCommendationsPanel,
   "sections.faq": StrapiFaq,
   "sections.heading-with-cta-button": StrapiHeadingWithCTAButton,
   "sections.hero": StrapiHero,

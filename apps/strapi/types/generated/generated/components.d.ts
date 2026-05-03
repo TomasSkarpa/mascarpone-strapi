@@ -129,6 +129,19 @@ export interface SectionsAttachmentDownload extends Struct.ComponentSchema {
   }
 }
 
+export interface SectionsCommendationsPanel extends Struct.ComponentSchema {
+  collectionName: "components_sections_commendations_panels"
+  info: {
+    description: "Grid of commendations with a labeled section header"
+    displayName: "CommendationsPanel"
+  }
+  attributes: {
+    items: Schema.Attribute.Component<"utilities.commendation-item", true> &
+      Schema.Attribute.Required
+    sectionLabel: Schema.Attribute.String & Schema.Attribute.Required
+  }
+}
+
 export interface SectionsFaq extends Struct.ComponentSchema {
   collectionName: "components_sections_faqs"
   info: {
@@ -434,6 +447,22 @@ export interface UtilitiesCkEditorText extends Struct.ComponentSchema {
   }
 }
 
+export interface UtilitiesCommendationItem extends Struct.ComponentSchema {
+  collectionName: "components_utilities_commendation_items"
+  info: {
+    description: "Single commendation with quote, attribution, and optional avatar"
+    displayName: "CommendationItem"
+  }
+  attributes: {
+    authorEmoji: Schema.Attribute.String
+    authorName: Schema.Attribute.String & Schema.Attribute.Required
+    avatar: Schema.Attribute.Component<"utilities.basic-image", false>
+    company: Schema.Attribute.String
+    roleTitle: Schema.Attribute.String
+    text: Schema.Attribute.Text & Schema.Attribute.Required
+  }
+}
+
 export interface UtilitiesDesignerTitle extends Struct.ComponentSchema {
   collectionName: "components_utilities_designer_titles"
   info: {
@@ -641,6 +670,7 @@ declare module "@strapi/strapi" {
       "sections.adaptive-gallery": SectionsAdaptiveGallery
       "sections.animated-logo-row": SectionsAnimatedLogoRow
       "sections.attachment-download": SectionsAttachmentDownload
+      "sections.commendations-panel": SectionsCommendationsPanel
       "sections.faq": SectionsFaq
       "sections.heading-with-cta-button": SectionsHeadingWithCtaButton
       "sections.hero": SectionsHero
@@ -659,6 +689,7 @@ declare module "@strapi/strapi" {
       "utilities.basic-image": UtilitiesBasicImage
       "utilities.ck-editor-content": UtilitiesCkEditorContent
       "utilities.ck-editor-text": UtilitiesCkEditorText
+      "utilities.commendation-item": UtilitiesCommendationItem
       "utilities.designer-title": UtilitiesDesignerTitle
       "utilities.image-with-link": UtilitiesImageWithLink
       "utilities.link": UtilitiesLink
