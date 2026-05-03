@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
 import type { Locale } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
 
@@ -17,6 +18,15 @@ import { ProjectTile } from "@/components/elementary/ProjectTile"
 import { PageContentComponents } from "@/components/page-builder"
 
 type Props = PageProps
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
+  const locale = params.locale as Locale
+  const t = await getTranslations({ locale, namespace: "projects" })
+  return {
+    title: t("title"),
+  }
+}
 
 export default async function ProjectsPage(props: Props) {
   const params = await props.params

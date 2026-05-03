@@ -21,7 +21,7 @@ export function StrapiProjectShowcase({
       <Container className={pageBuilderSectionY}>
         {component.title && (
           <h2
-            className={`mb-10 text-center text-balance sm:mb-12 ${pageBuilderSectionTitleClass}`}
+            className={`mb-6 text-center text-balance sm:mb-8 ${pageBuilderSectionTitleClass}`}
           >
             {component.title}
           </h2>

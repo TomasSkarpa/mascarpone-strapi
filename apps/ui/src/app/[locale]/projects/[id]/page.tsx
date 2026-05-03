@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import type { Locale } from "next-intl"
 import { getTranslations, setRequestLocale } from "next-intl/server"
@@ -16,6 +17,19 @@ import { PageContentComponents } from "@/components/page-builder"
 type Props = PageProps<{
   id: string
 }>
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params
+  const locale = params.locale as Locale
+  const response = await fetchProject(params.id, locale)
+  const projectTitle = response?.data?.title
+  if (!projectTitle) {
+    return {}
+  }
+  return {
+    title: projectTitle,
+  }
+}
 
 export default async function ProjectDetailPage(props: Props) {
   const params = await props.params
