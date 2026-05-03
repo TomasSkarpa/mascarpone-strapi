@@ -17,10 +17,7 @@ export function StrapiCommendationsPanel({
   }
 
   return (
-    <section
-      aria-label={component.sectionLabel ?? undefined}
-      className="bg-neutral-50 text-gray-900 dark:bg-neutral-50 dark:text-gray-900"
-    >
+    <section aria-label={component.sectionLabel ?? undefined}>
       <Container className={cn(pageBuilderSectionY)}>
         <div className="relative mx-auto mb-10 flex w-full max-w-3xl items-center justify-center sm:mb-12 lg:mb-14">
           <div

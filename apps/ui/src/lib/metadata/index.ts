@@ -28,6 +28,43 @@ import {
 } from "@/lib/metadata/helpers"
 import { fetchPage, fetchSeo } from "@/lib/strapi-api/content/server"
 
+type SeoTranslateFn = Awaited<ReturnType<typeof getTranslations>>
+
+function buildNotFoundMetadata(
+  locale: Locale,
+  defaultMeta: Metadata,
+  defaultOgMeta: Metadata["openGraph"],
+  defaultTwitterMeta: Metadata["twitter"],
+  t: SeoTranslateFn,
+  customMetadata?: Metadata
+): Metadata {
+  const title = t("notFound.metaTitle")
+  const description = t("notFound.metaDescription")
+  const merged: Metadata = {
+    ...defaultMeta,
+    title,
+    description,
+    robots: { index: false, follow: false },
+    alternates: undefined,
+    openGraph: {
+      type: "website",
+      locale,
+      siteName: defaultOgMeta?.siteName,
+      title,
+      description,
+      images: defaultOgMeta?.images,
+    },
+    twitter: {
+      ...defaultTwitterMeta,
+      title,
+      description,
+    },
+    ...customMetadata,
+  }
+  debugSeoGeneration(merged, undefined, undefined, `Not found (${locale})`)
+  return merged
+}
+
 export async function getMetadataFromStrapi({
   fullPath,
   locale,
@@ -69,6 +106,7 @@ export async function getMetadataFromStrapi({
       defaultMeta,
       defaultOgMeta,
       defaultTwitterMeta,
+      t,
       customMetadata,
       uid
     )
@@ -89,6 +127,7 @@ async function fetchAndMapStrapiMetadata(
   defaultMeta: Metadata,
   defaultOgMeta: Metadata["openGraph"],
   defaultTwitterMeta: Metadata["twitter"],
+  t: SeoTranslateFn,
   customMetadata?: Metadata,
   uid: Extract<UID.ContentType, "api::page.page"> = "api::page.page"
 ) {
@@ -98,9 +137,24 @@ async function fetchAndMapStrapiMetadata(
     fullPath ? fetchPage(fullPath, locale) : null,
   ])
 
+  const pageFromFetch = pageRes?.data
+  if (
+    fullPath &&
+    (pageFromFetch == null || pageFromFetch.content == null)
+  ) {
+    return buildNotFoundMetadata(
+      locale,
+      defaultMeta,
+      defaultOgMeta,
+      defaultTwitterMeta,
+      t,
+      customMetadata
+    )
+  }
+
   const seo = seoRes?.data?.seo
   const { localizations } = seoRes?.data || {}
-  const pageData = pageRes?.data || seoRes?.data
+  const pageData = pageFromFetch ?? seoRes?.data
 
   const fallbackTitle =
     pageData?.title ?? pageData?.breadcrumbTitle ?? undefined

@@ -1,27 +1,31 @@
 {
   "seo": {
-    "metaTitle": "SEO-TITLE",
-    "metaDescription": "SEO-DESCRIPTION",
-    "metaImage": "SEO-IMAGE",
-    "metaRobots": "SEO-ROBOTS",
-    "keywords": "SEO-KEYWORDS",
-    "applicationName": "SEO-APPLICATION-NAME",
-    "siteName": "Site Name",
+    "metaTitle": "Tomáš Škarpa",
+    "metaDescription": "Professional web development and digital solutions by Tomáš Škarpa. Modern web technologies and user-centered design.",
+    "metaImage": "",
+    "metaRobots": "index,follow",
+    "keywords": "web development, Tomáš Škarpa, digital solutions, UX design, frontend",
+    "applicationName": "Tomáš Škarpa",
+    "siteName": "Tomáš Škarpa",
+    "notFound": {
+      "metaTitle": "Page not found",
+      "metaDescription": "This page does not exist or may have been moved. Use the navigation or return to the homepage."
+    },
     "og": {
-      "title": "SEO-OG-TITLE",
-      "description": "SEO-OG-DESCRIPTION",
-      "url": "SEO-OG-URL",
-      "siteName": "SEO-OG-SITE-NAME",
-      "image": "SEO-OG-IMAGE"
+      "title": "Tomáš Škarpa",
+      "description": "Professional web development and digital solutions.",
+      "url": "",
+      "siteName": "Tomáš Škarpa",
+      "image": "/image-placeholder.svg"
     },
     "twitter": {
-      "card": "SEO-TWITTER-CARD",
-      "title": "SEO-TWITTER-TITLE",
-      "description": "SEO-TWITTER-DESCRIPTION",
-      "siteId": "SEO-TWITTER-SITE-ID",
-      "creator": "SEO-TWITTER-CREATOR",
-      "creatorId": "SEO-TWITTER-CREATOR-ID",
-      "imageUrl": "SEO-TWITTER-IMAGE-URL"
+      "card": "summary_large_image",
+      "title": "Tomáš Škarpa",
+      "description": "Professional web development and digital solutions.",
+      "siteId": "",
+      "creator": "Tomáš Škarpa",
+      "creatorId": "",
+      "imageUrl": "/image-placeholder.svg"
     }
   },
 
