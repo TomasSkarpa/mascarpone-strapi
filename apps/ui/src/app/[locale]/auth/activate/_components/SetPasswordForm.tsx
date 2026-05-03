@@ -1,6 +1,6 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -44,7 +44,7 @@ function SuspensedSetPasswordForm({ code, accountActivation }: Props) {
   const { resetPasswordMutation } = useUserMutations()
 
   const form = useForm<z.infer<FormSchemaType>>({
-    resolver: zodResolver(SetPasswordFormSchema),
+    resolver: standardSchemaResolver(SetPasswordFormSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: { password: "", passwordConfirmation: "" },

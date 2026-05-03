@@ -9,8 +9,82 @@ import { imageWithCtaButtonPopulate } from "./sections/ImageWithCtaButton"
 import { newsletterFormPopulate } from "./sections/NewsletterForm"
 import { seoPopulate } from "./seo-utilities/Seo"
 
-const pageTypes = ["api::page.page"]
-const pageActions = ["findMany"] // We're using findMany to find the pages, but this could be adjusted to findOne per your needs
+/** Shared dynamic-zone population for Page `content` and Projects page `belowProjects`. */
+export const dynamicZonePageContentPopulate = {
+  on: {
+    "sections.image-with-cta-button": imageWithCtaButtonPopulate,
+    "sections.hero": heroPopulate,
+    "sections.heading-with-cta-button": headingWithCtaButtonPopulate,
+    "sections.faq": faqPopulate,
+    "sections.animated-logo-row": animatedLogoRowPopulate,
+    "sections.adaptive-gallery": {
+      populate: {
+        images: {
+          populate: { image: { populate: { media: true } }, link: true },
+        },
+      },
+    },
+    "sections.attachment-download": {
+      populate: { file: true },
+    },
+    "sections.timeline": {
+      populate: { milestones: true },
+    },
+    "sections.quote-carousel": {
+      populate: { quotes: true },
+    },
+    "sections.project-showcase": {
+      populate: {
+        projects: {
+          populate: {
+            image: true,
+            tags: true,
+            links: true,
+          },
+        },
+      },
+    },
+    "sections.section-labeled-divider": true,
+    "sections.scheduled-fal-output": true,
+    "forms.newsletter-form": newsletterFormPopulate,
+    "forms.contact-form": contactFormPopulate,
+    "utilities.ck-editor-content": true,
+    "utilities.ck-editor-text": true,
+    "utilities.tip-tap-rich-text": true,
+  },
+} as const
+
+const introDynamicZonePopulate = {
+  on: {
+    "utilities.ck-editor-content": true,
+    "utilities.ck-editor-text": true,
+    "utilities.tip-tap-rich-text": true,
+  },
+} as const
+
+const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["findOne"]["populate"] =
+  {
+    content: dynamicZonePageContentPopulate,
+    seo: seoPopulate,
+  }
+
+const projectsPagePopulateObject: Record<string, unknown> = {
+  intro: introDynamicZonePopulate,
+  belowProjects: dynamicZonePageContentPopulate,
+  seo: seoPopulate,
+}
+
+const populateByUid: Record<
+  string,
+  Record<string, unknown> | typeof pagePopulateObject
+> = {
+  "api::page.page": pagePopulateObject,
+  "api::projects-page.projects-page": projectsPagePopulateObject,
+}
+
+const documentUidsWithPopulateMiddleware = Object.keys(populateByUid)
+
+const pageActions = ["findMany"] // We're using findMany to find the pages, but this could be adjusted for findOne per your needs
 
 /**
  * True when the query is asking for a single page — same cases as
@@ -33,92 +107,42 @@ function isSinglePageQuery(params: {
 }
 
 /**
- * Registers a middleware to customize the population of related fields for page documents during Strapi queries.
- *
- * This middleware intercepts document queries for the "api::page.page" content type when the action is "findMany".
- * If the request parameters request a single document (see `isSinglePageQuery`) and include a
- * 'middlewarePopulate' array, it selectively applies deep population rules for specified attributes,
- * as defined in 'pagePopulateObject'.
- *
- * The request must contain 'middlewarePopulate' (array of string keys) in the 'params' object, which is going to be mapped to 'pagePopulateObject' attributes.
- *
+ * Registers middleware to customize population for Page and Projects page documents.
  */
 export const registerPopulatePageMiddleware = ({ strapi }) => {
   strapi.documents.use((context, next) => {
+    const populateObject = populateByUid[context.uid]
     if (
-      pageTypes.includes(context.uid) &&
-      pageActions.includes(context.action)
+      !populateObject ||
+      !documentUidsWithPopulateMiddleware.includes(context.uid) ||
+      !pageActions.includes(context.action)
     ) {
-      const requestParams: {
-        start?: number
-        limit?: number
-        middlewarePopulate?: Array<string>
-        pagination?: { page?: number; pageSize?: number }
-      } = context.params
-      if (
-        isSinglePageQuery(requestParams) &&
-        Array.isArray(requestParams?.middlewarePopulate) &&
-        context.params.populate != null
-      ) {
-        requestParams.middlewarePopulate
-          .filter((populateAttr) =>
-            Object.keys(pagePopulateObject).includes(populateAttr)
-          )
-          .forEach((populateAttr) => {
-            context.params.populate[populateAttr] =
-              pagePopulateObject[populateAttr]
-          })
-      }
+      return next()
+    }
+
+    const requestParams: {
+      start?: number
+      limit?: number
+      middlewarePopulate?: Array<string>
+      pagination?: { page?: number; pageSize?: number }
+    } = context.params
+    const allowPopulate =
+      Array.isArray(requestParams?.middlewarePopulate) &&
+      context.params.populate != null &&
+      (context.uid === "api::projects-page.projects-page" ||
+        isSinglePageQuery(requestParams))
+
+    if (allowPopulate) {
+      requestParams.middlewarePopulate!
+        .filter((populateAttr) =>
+          Object.keys(populateObject).includes(populateAttr)
+        )
+        .forEach((populateAttr) => {
+          ;(context.params.populate as Record<string, unknown>)[populateAttr] =
+            populateObject[populateAttr] as unknown
+        })
     }
 
     return next()
   })
 }
-
-const pagePopulateObject: Modules.Documents.ServiceParams<"api::page.page">["findOne"]["populate"] =
-  {
-    content: {
-      on: {
-        "sections.image-with-cta-button": imageWithCtaButtonPopulate,
-        "sections.hero": heroPopulate,
-        "sections.heading-with-cta-button": headingWithCtaButtonPopulate,
-        "sections.faq": faqPopulate,
-        "sections.animated-logo-row": animatedLogoRowPopulate,
-        "sections.adaptive-gallery": {
-          populate: {
-            images: {
-              populate: { image: { populate: { media: true } }, link: true },
-            },
-          },
-        },
-        "sections.attachment-download": {
-          populate: { file: true },
-        },
-        "sections.timeline": {
-          populate: { milestones: true },
-        },
-        "sections.quote-carousel": {
-          populate: { quotes: true },
-        },
-        "sections.project-showcase": {
-          populate: {
-            projects: {
-              populate: {
-                image: true,
-                tags: true,
-                links: true,
-              },
-            },
-          },
-        },
-        "sections.section-labeled-divider": true,
-        "sections.scheduled-fal-output": true,
-        "forms.newsletter-form": newsletterFormPopulate,
-        "forms.contact-form": contactFormPopulate,
-        "utilities.ck-editor-content": true,
-        "utilities.ck-editor-text": true,
-        "utilities.tip-tap-rich-text": true,
-      },
-    },
-    seo: seoPopulate,
-  }

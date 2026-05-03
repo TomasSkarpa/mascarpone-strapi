@@ -1,6 +1,6 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 import { MoveRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
@@ -24,7 +24,7 @@ export function NewsletterForm() {
   const NewsletterFormSchema = createNewsletterFormSchema(t)
 
   const form = useForm<FormSchemaType>({
-    resolver: zodResolver(NewsletterFormSchema),
+    resolver: standardSchemaResolver(NewsletterFormSchema),
     mode: "onBlur",
     reValidateMode: "onSubmit",
     defaultValues: { email: "" },

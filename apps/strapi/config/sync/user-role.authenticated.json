@@ -16,6 +16,11 @@
       "locale": null
     },
     {
+      "action": "api::projects-page.projects-page.find",
+      "documentId": "prjspgx9authliw9dg9wuka",
+      "locale": null
+    },
+    {
       "action": "api::page.page.find",
       "documentId": "iptpk1lzyv6m6vtaztx93eqg",
       "locale": null

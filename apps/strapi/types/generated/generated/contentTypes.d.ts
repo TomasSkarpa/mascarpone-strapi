@@ -767,6 +767,82 @@ export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   }
 }
 
+export interface ApiProjectsPageProjectsPage extends Struct.SingleTypeSchema {
+  collectionName: "projects_pages"
+  info: {
+    description: "Intro copy and sections for the /projects listing (grid is fixed on the frontend)."
+    displayName: "Projects page"
+    pluralName: "projects-pages"
+    singularName: "projects-page"
+  }
+  options: {
+    draftAndPublish: true
+  }
+  pluginOptions: {
+    i18n: {
+      localized: true
+    }
+  }
+  attributes: {
+    belowProjects: Schema.Attribute.DynamicZone<
+      [
+        "sections.image-with-cta-button",
+        "sections.hero",
+        "sections.adaptive-gallery",
+        "sections.heading-with-cta-button",
+        "sections.faq",
+        "sections.animated-logo-row",
+        "forms.newsletter-form",
+        "forms.contact-form",
+        "utilities.ck-editor-content",
+        "utilities.ck-editor-text",
+        "utilities.tip-tap-rich-text",
+        "sections.attachment-download",
+        "sections.timeline",
+        "sections.quote-carousel",
+        "sections.project-showcase",
+        "sections.section-labeled-divider",
+        "sections.scheduled-fal-output",
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    createdAt: Schema.Attribute.DateTime
+    createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+    intro: Schema.Attribute.DynamicZone<
+      [
+        "utilities.ck-editor-content",
+        "utilities.ck-editor-text",
+        "utilities.tip-tap-rich-text",
+      ]
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    locale: Schema.Attribute.String
+    localizations: Schema.Attribute.Relation<
+      "oneToMany",
+      "api::projects-page.projects-page"
+    >
+    publishedAt: Schema.Attribute.DateTime
+    seo: Schema.Attribute.Component<"seo-utilities.seo", false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true
+        }
+      }>
+    updatedAt: Schema.Attribute.DateTime
+    updatedBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
+      Schema.Attribute.Private
+  }
+}
+
 export interface ApiRedirectRedirect extends Struct.CollectionTypeSchema {
   collectionName: "redirects"
   info: {
@@ -1143,6 +1219,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<"oneToOne", "admin::user"> &
       Schema.Attribute.Private
     ext: Schema.Attribute.String
+    focalPoint: Schema.Attribute.JSON
     folder: Schema.Attribute.Relation<"manyToOne", "plugin::upload.folder"> &
       Schema.Attribute.Private
     folderPath: Schema.Attribute.String &
@@ -1395,6 +1472,7 @@ declare module "@strapi/strapi" {
       "api::navbar.navbar": ApiNavbarNavbar
       "api::page.page": ApiPagePage
       "api::project.project": ApiProjectProject
+      "api::projects-page.projects-page": ApiProjectsPageProjectsPage
       "api::redirect.redirect": ApiRedirectRedirect
       "api::scheduled-fal-image.scheduled-fal-image": ApiScheduledFalImageScheduledFalImage
       "api::subscriber.subscriber": ApiSubscriberSubscriber

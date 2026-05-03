@@ -1,6 +1,6 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -27,7 +27,7 @@ export function ChangePasswordForm() {
   const { changePasswordMutation } = useUserMutations()
 
   const form = useForm<z.infer<FormSchemaType>>({
-    resolver: zodResolver(ChangePasswordFormSchema),
+    resolver: standardSchemaResolver(ChangePasswordFormSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {

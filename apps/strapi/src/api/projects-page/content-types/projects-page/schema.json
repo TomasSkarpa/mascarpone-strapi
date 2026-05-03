@@ -1,0 +1,70 @@
+{
+  "kind": "singleType",
+  "collectionName": "projects_pages",
+  "info": {
+    "singularName": "projects-page",
+    "pluralName": "projects-pages",
+    "displayName": "Projects page",
+    "description": "Intro copy and sections for the /projects listing (grid is fixed on the frontend)."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "intro": {
+      "type": "dynamiczone",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "components": [
+        "utilities.ck-editor-content",
+        "utilities.ck-editor-text",
+        "utilities.tip-tap-rich-text"
+      ]
+    },
+    "belowProjects": {
+      "type": "dynamiczone",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "components": [
+        "sections.image-with-cta-button",
+        "sections.hero",
+        "sections.adaptive-gallery",
+        "sections.heading-with-cta-button",
+        "sections.faq",
+        "sections.animated-logo-row",
+        "forms.newsletter-form",
+        "forms.contact-form",
+        "utilities.ck-editor-content",
+        "utilities.ck-editor-text",
+        "utilities.tip-tap-rich-text",
+        "sections.attachment-download",
+        "sections.timeline",
+        "sections.quote-carousel",
+        "sections.project-showcase",
+        "sections.section-labeled-divider",
+        "sections.scheduled-fal-output"
+      ]
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "seo-utilities.seo"
+    }
+  }
+}

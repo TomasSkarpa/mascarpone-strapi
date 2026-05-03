@@ -23,6 +23,7 @@ describe("App Test Suite", () => {
       expect(contentTypes).toContain("api::subscriber.subscriber")
       expect(contentTypes).toContain("api::navbar.navbar")
       expect(contentTypes).toContain("api::footer.footer")
+      expect(contentTypes).toContain("api::projects-page.projects-page")
       expect(contentTypes).toContain("api::redirect.redirect")
     })
   })

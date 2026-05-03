@@ -203,27 +203,31 @@ export async function fetchProject(documentId: string, locale: Locale) {
   }
 }
 
-export async function fetchProjectsPage(locale: Locale) {
+/** Single-type CMS entry for the /projects listing (intro + blocks below the grid + SEO). */
+export async function fetchProjectsLandingPage(locale: Locale) {
+  const dm = await draftMode()
+
   try {
-    return await PublicStrapiClient.fetchOneByFullPath(
-      "api::page.page",
-      "/projects",
+    return await PublicStrapiClient.fetchOne(
+      "api::projects-page.projects-page",
+      undefined,
       {
         locale,
         populate: {
-          content: true,
+          intro: true,
+          belowProjects: true,
           seo: true,
         },
-        middlewarePopulate: ["content", "seo"],
-        status: "published",
+        middlewarePopulate: ["intro", "belowProjects", "seo"],
+        status: dm.isEnabled ? "draft" : "published",
       }
     )
-  } catch (e: any) {
-    console.error({
-      message: `Error fetching projects page for locale '${locale}'`,
+  } catch (e: unknown) {
+    logNonBlockingError({
+      message: `Error fetching projects landing for locale '${locale}'`,
       error: {
-        error: e?.message,
-        stack: e?.stack,
+        error: e instanceof Error ? e.message : String(e),
+        stack: e instanceof Error ? e.stack : undefined,
       },
     })
   }

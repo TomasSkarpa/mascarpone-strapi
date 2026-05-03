@@ -1,7 +1,7 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { standardSchemaResolver } from "@hookform/resolvers/standard-schema"
 import { useTranslations } from "next-intl"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -38,7 +38,7 @@ function SuspensedSignInForm({ strapiUrl }: { strapiUrl?: string }) {
   const { signInMutation } = useUserMutations()
 
   const form = useForm<z.infer<FormSchemaType>>({
-    resolver: zodResolver(SignInFormSchema),
+    resolver: standardSchemaResolver(SignInFormSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: { email: "", password: "" },
