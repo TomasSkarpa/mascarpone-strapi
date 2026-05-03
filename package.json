@@ -55,6 +55,7 @@
     "@repo/typescript-config": "workspace:*",
     "commitizen": "4.3.1",
     "cz-conventional-changelog": "3.3.0",
+    "eslint": "^9.39.2",
     "husky": "9.1.7",
     "lint-staged": "16.4.0",
     "prettier": "3.8.3",
